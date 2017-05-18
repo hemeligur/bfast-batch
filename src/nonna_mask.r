@@ -4,9 +4,6 @@
 # invisible(setCompilerOptions(optimize=3, suppressAll=TRUE, suppressUndefined=TRUE))
 # invisible(enableJIT(3))
 library(parallel)
-
-# source("../lib/utils.lib.r");
-source("zonal_parallel.r")
 # gets the arguments
 # Must be in the following order: timeChange, timeUnits, maskStr, dataRasterStr
 
@@ -36,7 +33,10 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 			dataRaster = raster(dataRasterStr);
 		}
 	##############################_Preprocessing input_##############################
+		# Inicializa a variável com o valor padrão original
+		dataRasterTmpStr = dataRasterStr
 		if(!endsWith(maskStr, ".tif")){
+		#########################_SHP_############################################
 			if(endsWith(maskStr, ".shp")){
 				shape_mask = shapefile(maskStr)
 
@@ -79,20 +79,21 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 				centroids = cellsNzone['pol_cells']['centroid']
 				zone_mask = cellsNzone['zone_mask']
 			###########_Creating mask and data temp files_##########################
+				# Cria uma máscara e brick temporários para o processamento
 				maskRast = raster(dataRaster)
 				dataRasterTmp = NA
 				switch(shape_proc_method,
 					'1' = , '4' = {
 						maskRast[cells] = 1
 					},
-					'2' = {
+					'2' =, '3' = {
 						most_representative = function(vals, cells){
 							m = mean(vals)
 							i = which.min(abs(m-vals))
 							cell = cells[i]
 							v = vals[i]
 
-							return(c('index' = i, 'value' = v, 'cell' = cell))
+							return(c('index' = i, 'value' = v, 'cell' = cell, 'mean' = m))
 						}
 						result = zonal_parallel(dataRaster, zone_mask, most_representative)
 						
@@ -102,26 +103,25 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 
 						nl = length(result[[1]]$values)
 						dataRasterTmp = brick(nrow=nrow(maskRast), ncol=ncol(maskRast), nl=nl)
+						idx = ifelse(shape_proc_method==2, 'value', 'mean')
 						for (i in 1:length(result)) {
-							dataRasterTmp[croppedCentroids[i]] = result[[i]]$values['value',]
+							dataRasterTmp[croppedCentroids[i]] = as.numeric(result[[i]]$values[idx,])
 						}
-					},
-					'3' = {
-
 					})
-
-				# Updated until here #######################################
+			########################### Saving temp files to disk ##################
 
 				maskStr = paste0(strtrim(maskStr, nchar(maskStr)-3), "tif")
 				maskRast = writeRaster(x = maskRast, filename = maskStr, datatype = 'INT4S',
 					NAflag = -3000, format = 'GTiff', options = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=YES"),
 					overwrite=TRUE)
 
-				dataRasterTmpStr = paste0(strtrim(dataRasterStr, nchar(dataRasterStr)-3), "tmp")
+				dataRasterStr.split = strsplit(dataRasterStr, "/")
+				dataRasterTmpStr = paste0("../tmp/", dataRasterStr.split[[1]][length(dataRasterStr.split[[1]])])
+				dataRasterTmpStr = paste0(strtrim(dataRasterTmpStr, nchar(dataRasterTmpStr)-3), "tmp")
 				dataRasterTmp = writeRaster(x = dataRasterTmp, filename = dataRasterTmpStr, datatype = 'FLT4S',
 					NAflag = -3000, format = 'GTiff', options = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=YES", "INTERLEAVE=PIXEL"),
 					overwrite=TRUE)
-
+		#########################_CSV_############################################
 			}else if(endsWith(maskStr, ".csv")){
 				maskRast = raster(dataRaster)
 

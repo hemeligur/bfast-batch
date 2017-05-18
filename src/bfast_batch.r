@@ -74,7 +74,7 @@ bfast_batch = function(h=0.06, season='harmonic', startRow, startCol, dates, sta
 				outputType = as.character(outputType)
 		}
 
-		logFile = paste0("./logs/bfast_", startIndex, "-", endIndex, ".log")
+		logFile = paste0("../logs/bfast_", startIndex, "-", endIndex, ".log")
 
 		cat("startIndex:", startIndex, "\n", file=logFile, append = TRUE)
 		cat("endIndex:", endIndex, "\n", file=logFile, append = TRUE)

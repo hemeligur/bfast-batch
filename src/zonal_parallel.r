@@ -81,27 +81,3 @@ zonal_parallel = function(rastr, zone_mask, fun, cores=detectCores()-1){
 	return(res)
 
 }
-
-# shp_sample = shapefile("../data/Pastagem/SIAD/SIAD_15_16_shape_sample.shp")
-# br_ndvi = brick("../data/pa_br_mod13q1_ndvi_250_2000_2016.tif")
-# br_ndvi_layer1 = raster("../data/pa_br_mod13q1_ndvi_250_2000_2016.tif")
-
-# system.time(cells <- cellFromPolygon(br_ndvi_layer1, shp_sample, weights=F))
-# zone_mask = raster(br_ndvi_layer1)
-
-# cl = makeCluster(detectCores() -1)
-# clusterExport(cl, c("zone_mask", "cells"))
-
-# system.time(
-# 	res <- parLapply(cl, 1:length(cells), function(pol){
-# 		tryCatch(zone_mask[cells[[pol]]] <- pol, error=function(e){return(NA)})
-# 	})
-# )
-
-# stopCluster(cl)
-
-# # for(pol in 1:length(cells)){
-# # 	for(cell in cells[[pol]]){
-# # 		zone_mask[cell]=pol
-# # 	}
-# # }

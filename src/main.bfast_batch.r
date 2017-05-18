@@ -25,10 +25,19 @@
 	print("Sourcing code")
 	source("../lib/utils.lib.r")
 	source("nonna_mask.r")
+	source("zonal_parallel.r")
 	source("bfast_batch.r")
+###########################_Creating_log_and_tmp_folders_##############################
+	print("Creating log and tmp folders")
+	if(!dir.exists("../logs")){
+		dir.create("../logs")
+	}
+	if(!dir.exists("../tmp")){
+		dir.create("../tmp")
+	}
 ################################_Cleaning_log_files_###################################
 	print("Cleaning log files")
-	invisible(file.remove(Sys.glob("./logs/*.log")))
+	invisible(file.remove(Sys.glob("../logs/*.log")))
 #########################_Reading_args_and_setting_defaults_###########################
 	print("Reading args")
 	args = getArgs(2, must=TRUE);
