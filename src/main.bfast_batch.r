@@ -38,6 +38,7 @@
 ################################_Cleaning_log_files_###################################
 	print("Cleaning log files")
 	invisible(file.remove(Sys.glob("../logs/*.log")))
+	invisible(file.remove(Sys.glob("../tmp/*.tmp")))
 #########################_Reading_args_and_setting_defaults_###########################
 	print("Reading args")
 	args = getArgs(2, must=TRUE);
