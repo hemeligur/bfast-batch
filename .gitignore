@@ -1,0 +1,13 @@
+# Folders #
+./tmp
+./logs
+
+# 'Commom' Files #
+*.log
+*.tmp
+*.tif
+*.aux.xml
+*.csv
+
+# 'App Specific' Files #
+*_nonna.txt
