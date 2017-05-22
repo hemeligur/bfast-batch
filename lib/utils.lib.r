@@ -237,6 +237,17 @@ generateModisDates = function(obsNum){
     return(dates)
 }
 
+readInput = function(inputMsg=""){
+	if(interactive()){
+		input = readline(inputMsg)
+	}else{
+		cat(inputMsg)
+		input = readLines(n=1)
+	}
+
+	return(input)
+}
+
 # Asks the user for input and expects a numeric response
 readNumericParam = function(inputMsg, startBound, endBound, outOfBoundsMsg, tries, stopMsg, stopValue){
     param_valid = FALSE
@@ -244,7 +255,7 @@ readNumericParam = function(inputMsg, startBound, endBound, outOfBoundsMsg, trie
     param = 0
 
     while(!param_valid){
-        param <- readline(inputMsg)
+        param <- readInput(inputMsg)
 
         param = as.numeric(unlist(param))
         if(is.na(param) || param < startBound || param > endBound ){
