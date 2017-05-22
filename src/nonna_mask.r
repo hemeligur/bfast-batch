@@ -12,6 +12,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 	dataRasterStr = "../data/pa_br_mod13q1_ndvi_250_2000_2016.tif", shape_proc_method=0, printHelp=FALSE){
 
 	#############################_Arguments_prep_####################################
+	print("_Arguments_prep_")
 		if(printHelp == TRUE){
 			printHelp(cmdName="nonna_mask", args=c("timeChange", "timeUnits", "maskStr", "dataRasterStr", "shape_proc_method", "-h;--help"),
 				defaultArgs=c("1","365", "maskStr.tif", "dataRasterStr.tif", "0"),
@@ -32,7 +33,8 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 		}else{
 			dataRaster = raster(dataRasterStr);
 		}
-	##############################_Preprocessing input_##############################
+	##############################_Preprocessing_input_##############################
+	print("_Preprocessing_input_")
 		# Inicializa a variável com o valor padrão original
 		dataRasterTmpStr = dataRasterStr
 		if(!endsWith(maskStr, ".tif")){
@@ -144,6 +146,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 			}
 		}
 	##############################_nonna_startRow_and_startCol_######################
+	print("_nonna_startRow_and_startCol_")
 		mask = raster(maskStr);
 
 		beginCoord = xyFromCell(mask, 1);
@@ -164,6 +167,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 		nonna_sz = length(nonna)
 		rm("nonna")
 	##############################_h_and_dates_######################################
+	print("_h_and_dates_")
 		suppressWarnings(ts_info <- GDALinfo(dataRasterStr));
 		bands = ts_info['bands']
 
@@ -172,6 +176,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 	
 		dates = generateModisDates(bands)
 	#############################_output_############################################
+	print("_output_")
 
 		nonna_output = list(nonna_sz=nonna_sz, h=h, startRow=startRow, startCol=startCol, dates=dates,
 			dataRasterTmpStr=dataRasterTmpStr)
