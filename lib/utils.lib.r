@@ -344,16 +344,18 @@ cellFromPointOrPolygon = function(r, p, type){
 
 cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detectCores()-1){
 	library(parallel)
+	#####################_Creating cluster_#################################
+		cl = makeCluster(cores)
 	###########_Creating empty zone mask raster_############################
 		if(type == 2 || type == 3){
 			message("Creating zone mask...")
 			zone_mask = raster(rastr)
 			zone_mask = crop(extent(shape_mask)+5)
 			setValues(zone_mask, 0)
+			clusterExport(cl, c("zone_mask"))
 		}
 	###########_Preparing cluster for cell extraction_######################
-		cl = makeCluster(cores)
-		clusterExport(cl, c("zone_mask", "cellFromPointOrPolygon", "type"))
+		clusterExport(cl, c("cellFromPointOrPolygon", "type"))
 		clusterEvalQ(cl, library(raster))
 	###########_Extracting cell values and Zone Mask calculation_###########
 		cellsNzone <- parLapplyLB(cl, 1:length(shape_mask), function(pol){
