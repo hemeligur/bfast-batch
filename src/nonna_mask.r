@@ -44,7 +44,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 
 			###########_Choosing shapefile process method_##########################
 				if(shape_proc_method == 0){
-					shape_class = class(p)[1]
+					shape_class = class(shape_mask)[1]
 				########################_Polygons_###########################
 					if(shape_class == 'SpatialPolygons' || shape_class == 'SpatialPolygonsDataFrame'){
 						if(!is.na(Sys.getenv("DISPLAY", unset = NA)) && require(tcltk)){
