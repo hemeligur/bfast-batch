@@ -8,6 +8,11 @@
 *.tif
 *.aux.xml
 *.csv
+*.dbf
+*.prj
+*.qpj
+*.shp
+*.shx
 
 # 'App Specific' Files #
 *_nonna.txt
