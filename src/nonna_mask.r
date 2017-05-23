@@ -87,11 +87,11 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 				# Cria uma máscara e brick temporários para o processamento
 				maskRast = raster(dataRaster)
 				dataRasterTmp = NA
-				switch(shape_proc_method,
+				switch(as.character(shape_proc_method),
 					'1' = , '4' = {
 						maskRast[cells] = 1
 					},
-					'2' =, '3' = {
+					'2' = , '3' = {
 						most_representative = function(vals, cells){
 							m = mean(vals)
 							i = which.min(abs(m-vals))
