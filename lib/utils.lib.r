@@ -345,7 +345,7 @@ cellFromPointOrPolygon = function(r, p, type){
 cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detectCores()-1){
 	library(parallel)
 	#####################_Creating cluster_#################################
-		cl = makeCluster(cores)
+		cl = makeCluster(cores, outfile="")
 	###########_Creating empty zone mask raster_############################
 		if(type == 2 || type == 3){
 			message("Creating zone mask...")
@@ -370,6 +370,9 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 			if(type == 2 || type == 3){
 				res['zone_mask'] = zone_mask
 			}
+
+			print(paste("pol_cells", pol_cells))
+
 			return(res)
 		})
 
