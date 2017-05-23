@@ -34,7 +34,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 			dataRaster = raster(dataRasterStr);
 		}
 	##############################_Preprocessing_input_##############################
-	print("_Preprocessing_input_")
+	print("Preprocessing input ")
 		# Inicializa a variável com o valor padrão original
 		dataRasterTmpStr = dataRasterStr
 		if(!endsWith(maskStr, ".tif")){
@@ -58,11 +58,11 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 							if(shape_proc_method == "") shape_proc_method = 1
 						}else{
 							tries = 3
-							shape_proc_method = readNumericParam(inputMsg=suppressWarnings(paste0(
+							shape_proc_method = readNumericParam(inputMsg=paste0(
 								"Você entrou com um arquivo Shapefile.\n",
 								"Por favor, escolha o método de processamento dos polígonos ",
 								"digitando o número correspondente:\n",
-								"\n\t1-Mais próximo do Centróide (Default)\n\t2-Pixel melhor representante\n\t3-Média\n> ")),
+								"\n\t1-Mais próximo do Centróide (Default)\n\t2-Pixel melhor representante\n\t3-Média\n> "),
 							startBound=1, endBound=2, outOfBoundsMsg="Valor inválido!", tries=tries,
 							stopMsg=paste0("Muitas tentativas inválidas. ",
 								"Continuando processamento com o valor padrão."),
@@ -77,11 +77,13 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 				print("Reprojecting shapefile...")
 				shape_mask = spTransform(shape_mask, crs(dataRaster))
 			###########_Extracting cell values and Zone Mask calculation_###########
+				print("Extracting cell values and Zone Mask calculation")
 				cellsNzone <- cellExtractionNZoneMask_parallel(dataRaster, shape_mask, shape_proc_method)
 				cells = cellsNzone['pol_cells']['cells']
 				centroids = cellsNzone['pol_cells']['centroid']
 				zone_mask = cellsNzone['zone_mask']
 			###########_Creating mask and data temp files_##########################
+				print("Creating mask and data temp files")
 				# Cria uma máscara e brick temporários para o processamento
 				maskRast = raster(dataRaster)
 				dataRasterTmp = NA
@@ -112,7 +114,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 						}
 					})
 			########################### Saving temp files to disk ##################
-
+				print("Saving temp files to disk")
 				maskStr = paste0(strtrim(maskStr, nchar(maskStr)-3), "tif")
 				maskRast = writeRaster(x = maskRast, filename = maskStr, datatype = 'INT4S',
 					NAflag = -3000, format = 'GTiff', options = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=YES"),
