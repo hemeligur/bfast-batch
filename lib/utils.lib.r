@@ -254,8 +254,6 @@ readNumericParam = function(inputMsg, startBound, endBound, outOfBoundsMsg, trie
     count = 0
     param = 0
 
-    print(inputMsg)
-
     while(!param_valid){
         param <- readInput(inputMsg)
 
