@@ -58,7 +58,11 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 							if(shape_proc_method == "") shape_proc_method = 1
 						}else{
 							tries = 3
-							shape_proc_method = readNumericParam(inputMsg=paste0("Você entrou com um arquivo Shapefile.\n","Por favor, escolha o método de processamento dos polígonos ","digitando o número correspondente:\n","\n\t1-Mais próximo do Centróide (Default)\n\t2-Pixel melhor representante\n\t3-Média\n> "),
+							shape_proc_method = readNumericParam(inputMsg=paste0(
+								"Você entrou com um arquivo Shapefile.\n",
+								"Por favor, escolha o método de processamento dos polígonos ",
+								"digitando o número correspondente:\n",
+								"\n\t1-Mais próximo do Centróide (Default)\n\t2-Pixel melhor representante\n\t3-Média\n> "),
 							startBound=1, endBound=2, outOfBoundsMsg="Valor inválido!", tries=tries,
 							stopMsg=paste0("Muitas tentativas inválidas. ",
 								"Continuando processamento com o valor padrão."),
