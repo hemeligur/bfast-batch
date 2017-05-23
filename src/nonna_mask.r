@@ -58,7 +58,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 							if(shape_proc_method == "") shape_proc_method = 1
 						}else{
 							tries = 3
-							shape_proc_method = readNumericParam(inputMsg=paste0(
+							shape_proc_method = readNumericParam(inputMsg=paste0("",
 								"Você entrou com um arquivo Shapefile.\n",
 								"Por favor, escolha o método de processamento dos polígonos ",
 								"digitando o número correspondente:\n",
