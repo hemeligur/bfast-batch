@@ -350,7 +350,7 @@ cellFromPointOrPolygon = function(r, p, type){
 	  	warning("Invalid type. Must be between 1 and 4.")
 	  })
 
-	pol_cells = list()
+	pol_cells = NULL
 	pol_cells['cells'] = cells
 	pol_cells['centroid'] = centroid
 
@@ -381,14 +381,14 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 			}
 
 			res = NULL
-			res['pol_cells'] = pol_cells
+			res['pol_cells'] = list(pol_cells)
 			if(type == 2 || type == 3){
 				res['zone_mask'] = zone_mask
 			}else{
 				res['zone_mask'] = NA
 			}
 
-			cat("[1] cellsNzone: ")
+			cat("[1] cellsNzone:\n")
 			print(pol_cells)
 
 			return(res)
