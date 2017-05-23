@@ -350,7 +350,7 @@ cellFromPointOrPolygon = function(r, p, type){
 	  	warning("Invalid type. Must be between 1 and 4.")
 	  })
 
-	pol_cells = NULL
+	pol_cells = list()
 	pol_cells['cells'] = cells
 	pol_cells['centroid'] = centroid
 
