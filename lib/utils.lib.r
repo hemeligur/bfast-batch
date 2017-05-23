@@ -315,12 +315,14 @@ cellFromPointOrPolygon = function(r, p, type){
 			centr_cell = cellFromXY(r, centr)
 			pol_cells = cellFromPolygon(r, p, weights=F)[[1]]
 			if(!(centr_cell %in% pol_cells)){
-				r = crop(r, p)
-				r[] = 0
-				r[pol_cells] = 1
-				r[centr_cell] = 2
-				d = gridDistance(r, origin=2, omit=0)
-				r[centr_cell] = maxValue(d)+1000
+				r.crop = crop(r, p)
+				pol_cells.crop = cellFromXY(r.crop, xyFromCell(r, pol_cells))
+				centr_cell.crop = cellFromXY(r.crop, xyFromCell(r, centr_cell))
+				r.crop[] = 0
+				r.crop[pol_cells.crop] = 1
+				r.crop[centr_cell.crop] = 2
+				d = gridDistance(r.crop, origin=2, omit=0)
+				d[centr_cell.crop] = maxValue(d)+1000
 				cell = sample(list(Which(d == minValue(d), cells=TRUE)), 1)[[1]]
 			}else{
 				cell = centr_cell
