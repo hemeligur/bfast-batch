@@ -87,13 +87,15 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 				print("Creating mask and data temp files")
 				# Cria uma máscara e brick temporários para o processamento
 				maskRast = raster(dataRaster)
+				maskRast = crop(maskRast, extent(zone_mask)+6)
 				dataRasterTmp = NA
 				switch(as.character(shape_proc_method),
 					'1' = , '4' = {
 						print("Cases 1 and 4")
 						print(class(cells))
 						print(cells)
-						maskRast[cells] = 1
+						croppedCells = cellFromXY(maskRast, xyFromCell(dataRaster, cells))
+						maskRast[croppedCells] = 1
 					},
 					'2' = , '3' = {
 						print("Cases 2 and 3")
@@ -109,7 +111,6 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 						result = zonal_parallel(dataRaster, zone_mask, most_representative)
 						
 						print("Temp mask creation and filling")
-						maskRast = crop(maskRast, extent(zone_mask)+6)
 						croppedCentroids = cellFromXY(maskRast, xyFromCell(dataRaster, centroids))
 						maskRast[croppedCentroids] = 1
 
@@ -128,12 +129,14 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 					NAflag = -3000, format = 'GTiff', options = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=YES"),
 					overwrite=TRUE)
 
-				dataRasterStr.split = strsplit(dataRasterStr, "/")
-				dataRasterTmpStr = paste0("../tmp/", dataRasterStr.split[[1]][length(dataRasterStr.split[[1]])])
-				dataRasterTmpStr = paste0(strtrim(dataRasterTmpStr, nchar(dataRasterTmpStr)-3), "tmp")
-				dataRasterTmp = writeRaster(x = dataRasterTmp, filename = dataRasterTmpStr, datatype = 'FLT4S',
-					NAflag = -3000, format = 'GTiff', options = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=YES", "INTERLEAVE=PIXEL"),
-					overwrite=TRUE)
+				if(!is.na(dataRasterTmp)){
+					dataRasterStr.split = strsplit(dataRasterStr, "/")
+					dataRasterTmpStr = paste0("../tmp/", dataRasterStr.split[[1]][length(dataRasterStr.split[[1]])])
+					dataRasterTmpStr = paste0(strtrim(dataRasterTmpStr, nchar(dataRasterTmpStr)-3), "tmp")
+					dataRasterTmp = writeRaster(x = dataRasterTmp, filename = dataRasterTmpStr, datatype = 'FLT4S',
+						NAflag = -3000, format = 'GTiff', options = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=YES", "INTERLEAVE=PIXEL"),
+						overwrite=TRUE)
+				}
 		#########################_CSV_############################################
 			}else if(endsWith(maskStr, ".csv")){
 				maskRast = raster(dataRaster)
