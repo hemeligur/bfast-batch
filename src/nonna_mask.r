@@ -91,8 +91,6 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 				switch(as.character(shape_proc_method),
 					'1' = , '4' = {
 						print("Cases 1 and 4")
-						print(class(maskRast))
-						print(maskRast)
 						print(class(cells))
 						print(cells)
 						maskRast[cells] = 1

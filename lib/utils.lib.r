@@ -316,32 +316,45 @@ cellFromPointOrPolygon = function(r, p, type){
 			pol_cells = cellFromPolygon(r, p, weights=F)[[1]]
 			if(!(centr_cell %in% pol_cells)){
 				r.crop = crop(r, p)
+				
 				pol_cells.crop = cellFromXY(r.crop, xyFromCell(r, pol_cells))
 				centr_cell.crop = cellFromXY(r.crop, xyFromCell(r, centr_cell))
+				
 				r.crop[] = 0
 				r.crop[pol_cells.crop] = 1
 				r.crop[centr_cell.crop] = 2
+				
 				d = gridDistance(r.crop, origin=2, omit=0)
 				d[centr_cell.crop] = maxValue(d)+1000
 				cell = sample(list(Which(d == minValue(d), cells=TRUE)), 1)[[1]]
+				
+				cells = cellFromXY(r, xyFromCell(r.crop, cell))
+				centroid = centr_cell
 			}else{
-				cell = centr_cell
+				cells = centr_cell
+				centroid = cell
 			}
 		},
 		'2' = , '3' = {
-			cell = NULL
-			cell['cells'] = cellFromPolygon(r, p, weights=F)[[1]]
-			cell['centroid'] = cellFromPointOrPolygon(r, p, 1)
+			cells = cellFromPolygon(r, p, weights=F)[[1]]
+			centroid = cellFromPointOrPolygon(r, p, 1)
 		},
 		'4' = {
 			cell = cellFromXY(r, p)
+			cells= cell
+			centroid = NA
 		},
 		{
-	  	cell = NA
+			cells = NA
+			centroid = NA
 	  	warning("Invalid type. Must be between 1 and 4.")
 	  })
 
-  return(cell)
+	pol_cells = NULL
+	pol_cells['cells'] = cells
+	pol_cells['centroid'] = centroid
+
+  return(pol_cells)
 }
 
 cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detectCores()-1){
@@ -371,9 +384,11 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 			res['pol_cells'] = pol_cells
 			if(type == 2 || type == 3){
 				res['zone_mask'] = zone_mask
+			}else{
+				res['zone_mask'] = NA
 			}
 
-			print(paste("pol_cells", pol_cells))
+			print(paste("cellsNzone", pol_cells))
 
 			return(res)
 		})
