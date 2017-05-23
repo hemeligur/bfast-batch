@@ -89,9 +89,11 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 				dataRasterTmp = NA
 				switch(as.character(shape_proc_method),
 					'1' = , '4' = {
+						print("Cases 1 and 4")
 						maskRast[cells] = 1
 					},
 					'2' = , '3' = {
+						print("Cases 2 and 3")
 						most_representative = function(vals, cells){
 							m = mean(vals)
 							i = which.min(abs(m-vals))
@@ -100,12 +102,15 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 
 							return(c('index' = i, 'value' = v, 'cell' = cell, 'mean' = m))
 						}
+						print("Zonal parallel")
 						result = zonal_parallel(dataRaster, zone_mask, most_representative)
 						
+						print("Temp mask creation and filling")
 						maskRast = crop(maskRast, extent(zone_mask)+6)
 						croppedCentroids = cellFromXY(maskRast, xyFromCell(dataRaster, centroids))
 						maskRast[croppedCentroids] = 1
 
+						print("Temp data brick creation")
 						nl = length(result[[1]]$values)
 						dataRasterTmp = brick(nrow=nrow(maskRast), ncol=ncol(maskRast), nl=nl)
 						idx = ifelse(shape_proc_method==2, 'value', 'mean')
