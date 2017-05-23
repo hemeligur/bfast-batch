@@ -372,7 +372,7 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 		}
 	###########_Preparing cluster for cell extraction_######################
 		clusterExport(cl, c("cellFromPointOrPolygon"))
-		clusterExport(cl, c("type"), envir = environment())
+		clusterExport(cl, c("type", "rastr", "shape_mask"), envir = environment())
 		clusterEvalQ(cl, library(raster))
 	###########_Extracting cell values and Zone Mask calculation_###########
 		cellsNzone <- parLapplyLB(cl, 1:length(shape_mask), function(pol){
