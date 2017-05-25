@@ -92,8 +92,8 @@
 ################################_Cluster_preparation_##################################
 	print("Cluster preparation")
 	cores = detectCores()
-	bfast_cores = ifelse(cores>bfast_num_cores, bfast_num_cores, cores)
-	numproc = trunc((cores/bfast_cores)*2)
+	bfast_cores = min(cores, bfast_num_cores)
+	numproc = min(trunc((cores/bfast_cores)*2), nonna_result$nonna_sz)
 	pts_per_proc = trunc(nonna_result$nonna_sz/numproc)
 
 	cl = makeCluster(numproc, outfile="")
