@@ -124,10 +124,14 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 					})
 			########################### Saving temp files to disk ##################
 				print("Saving temp files to disk")
-				maskStr = paste0(strtrim(maskStr, nchar(maskStr)-3), "tif")
-				maskRast = writeRaster(x = maskRast, filename = maskStr, datatype = 'INT4S',
+				# maskStr = paste0(strtrim(maskStr, nchar(maskStr)-3), "tif")
+				maskStr.split = strsplit(maskStr, "/")
+				maskTmpStr = paste0("../tmp/", maskStr.split[[1]][length(maskStr.split[[1]])])
+				maskTmpStr = paste0(strtrim(maskTmpStr, nchar(maskTmpStr)-3), "tmp")
+				maskRast = writeRaster(x = maskRast, filename = maskTmpStr, datatype = 'INT4S',
 					NAflag = -3000, format = 'GTiff', options = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=YES"),
 					overwrite=TRUE)
+				maskStr = maskTmpStr
 
 				if(!is.na(dataRasterTmp)){
 					dataRasterStr.split = strsplit(dataRasterStr, "/")
