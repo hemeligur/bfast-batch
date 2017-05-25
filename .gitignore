@@ -13,6 +13,8 @@
 *.qpj
 *.shp
 *.shx
+.RData
+.Rhistory
 
 # 'App Specific' Files #
 *_nonna.txt
