@@ -87,7 +87,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 				print("Creating mask and data temp files")
 				# Cria uma máscara e brick temporários para o processamento
 				maskRast = raster(dataRaster)
-				maskRast = crop(maskRast, extent(zone_mask)+6)
+				maskRast = crop(maskRast, extent(shape_mask)+5)
 				dataRasterTmp = NA
 				switch(as.character(shape_proc_method),
 					'1' = , '4' = {
