@@ -129,7 +129,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 				print(maskStr.split)
 				maskTmpStr = paste0("../tmp/", maskStr.split[[1]][length(maskStr.split[[1]])])
 				print(maskTmpStr)
-				maskTmpStr = paste0(strtrim(maskTmpStr, nchar(maskTmpStr)-3), "tmp")
+				maskTmpStr = paste0(strtrim(maskTmpStr, nchar(maskTmpStr)-3), "tif")
 				print(maskTmpStr)
 				maskRast = writeRaster(x = maskRast, filename = maskTmpStr, datatype = 'INT4S',
 					NAflag = -3000, format = 'GTiff', options = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=YES"),
@@ -141,7 +141,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 				if(!is.na(dataRasterTmp)){
 					dataRasterStr.split = strsplit(dataRasterStr, "/")
 					dataRasterTmpStr = paste0("../tmp/", dataRasterStr.split[[1]][length(dataRasterStr.split[[1]])])
-					dataRasterTmpStr = paste0(strtrim(dataRasterTmpStr, nchar(dataRasterTmpStr)-3), "tmp")
+					dataRasterTmpStr = paste0(strtrim(dataRasterTmpStr, nchar(dataRasterTmpStr)-3), "tif")
 					dataRasterTmp = writeRaster(x = dataRasterTmp, filename = dataRasterTmpStr, datatype = 'FLT4S',
 						NAflag = -3000, format = 'GTiff', options = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=YES", "INTERLEAVE=PIXEL"),
 						overwrite=TRUE)
