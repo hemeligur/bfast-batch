@@ -126,17 +126,12 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 				print("Saving temp files to disk")
 				# maskStr = paste0(strtrim(maskStr, nchar(maskStr)-3), "tif")
 				maskStr.split = strsplit(maskStr, "/")
-				print(maskStr.split)
 				maskTmpStr = paste0("../tmp/", maskStr.split[[1]][length(maskStr.split[[1]])])
-				print(maskTmpStr)
 				maskTmpStr = paste0(strtrim(maskTmpStr, nchar(maskTmpStr)-3), "tif")
-				print(maskTmpStr)
 				maskRast = writeRaster(x = maskRast, filename = maskTmpStr, datatype = 'INT4S',
 					NAflag = -3000, format = 'GTiff', options = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=YES"),
 					overwrite=TRUE)
-				print(maskRast)
 				maskStr = maskTmpStr
-				print(maskStr)
 
 				if(!is.na(dataRasterTmp)){
 					dataRasterStr.split = strsplit(dataRasterStr, "/")
@@ -170,7 +165,6 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 		}
 	##############################_nonna_startRow_and_startCol_######################
 		print("Calculating nonna, startRow and startCol")
-		print(maskStr)
 		mask = raster(maskStr);
 
 		beginCoord = xyFromCell(mask, 1);
@@ -191,7 +185,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 		nonna_sz = length(nonna)
 		rm("nonna")
 	##############################_h_and_dates_######################################
-	print("_h_and_dates_")
+		print("Calculating h and dates")
 		suppressWarnings(ts_info <- GDALinfo(dataRasterStr));
 		bands = ts_info['bands']
 
@@ -200,7 +194,6 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 	
 		dates = generateModisDates(bands)
 	#############################_output_############################################
-	print("_output_")
 
 		nonna_output = list(nonna_sz=nonna_sz, h=h, startRow=startRow, startCol=startCol, dates=dates,
 			dataRasterTmpStr=dataRasterTmpStr)
