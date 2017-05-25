@@ -90,6 +90,7 @@
 	print(paste("Calculated h value:", nonna_result$h))
 	dataRasterStr = nonna_result$dataRasterTmpStr
 	maskStr = nonna_result$maskStr
+	print(maskStr)
 ################################_Cluster_preparation_##################################
 	print("Cluster preparation")
 	cores = detectCores()
@@ -125,7 +126,7 @@
 		}else{
 			endIndex = x*pts_per_proc
 		}
-		
+
 		print(maskStr)
 		tryCatch(
 			bfast_batch(h=nonna_result$h, season=nonna_result$season, startRow=nonna_result$startRow, 
