@@ -91,9 +91,6 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 				dataRasterTmp = NA
 				switch(as.character(shape_proc_method),
 					'1' = , '4' = {
-						print("Cases 1 and 4")
-						print(class(cells))
-						print(cells)
 						croppedCells = cellFromXY(maskRast, xyFromCell(dataRaster, cells))
 						maskRast[croppedCells] = 1
 					},
@@ -117,6 +114,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 						print("Temp data brick creation")
 						nl = length(result[[1]]$values)
 						dataRasterTmp = brick(nrow=nrow(maskRast), ncol=ncol(maskRast), nl=nl)
+						crs(dataRasterTmp) = crs(maskRast)
 						idx = ifelse(shape_proc_method==2, 'value', 'mean')
 						for (i in 1:length(result)) {
 							dataRasterTmp[croppedCentroids[i]] = as.numeric(result[[i]]$values[idx,])
@@ -137,7 +135,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 					dataRasterStr.split = strsplit(dataRasterStr, "/")
 					dataRasterTmpStr = paste0("../tmp/", dataRasterStr.split[[1]][length(dataRasterStr.split[[1]])])
 					dataRasterTmpStr = paste0(strtrim(dataRasterTmpStr, nchar(dataRasterTmpStr)-3), "tif")
-					dataRasterTmp = writeRaster(x = dataRasterTmp, filename = dataRasterTmpStr, datatype = 'FLT4S',
+					dataRaster = writeRaster(x = dataRasterTmp, filename = dataRasterTmpStr, datatype = 'FLT4S',
 						NAflag = -3000, format = 'GTiff', options = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=YES", "INTERLEAVE=PIXEL"),
 						overwrite=TRUE)
 				}
@@ -194,9 +192,8 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 	
 		dates = generateModisDates(bands)
 	#############################_output_############################################
-
 		nonna_output = list(nonna_sz=nonna_sz, h=h, startRow=startRow, startCol=startCol, dates=dates,
-			dataRasterTmpStr=dataRasterTmpStr)
+			dataRasterTmpStr=dataRasterTmpStr, maskStr=maskStr)
 		return(nonna_output)
 		# cat(nonna_sz, h, startRow, startCol, 
 		# 	paste0("c(", paste0("'", paste(dates, collapse="','"), "'"), ")"), "\n");
