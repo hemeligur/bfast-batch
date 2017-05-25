@@ -79,6 +79,7 @@ bfast_batch = function(h=0.06, season='harmonic', startRow, startCol, dates, sta
 		cat("startIndex:", startIndex, "\n", file=logFile, append = TRUE)
 		cat("endIndex:", endIndex, "\n", file=logFile, append = TRUE)
 
+		print(maskStr)
 		pastureMask = raster(maskStr);
 
 		nonna = scan(paste0(maskStr,"_nonna.txt"), sep=',', quiet=TRUE);

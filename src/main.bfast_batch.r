@@ -115,6 +115,7 @@
 	}
 ################################_Firing_parallel_nodes_################################
 	print(paste("Firing", numproc, "parallel nodes, each with", pts_per_proc, "points. Totalizing", nonna_result$nonna_sz))
+	print(maskStr)
 	res = parLapply(cl, 1:numproc, function(x){
 
 		startIndex = 1 + (x-1)*pts_per_proc
@@ -124,7 +125,8 @@
 		}else{
 			endIndex = x*pts_per_proc
 		}
-
+		
+		print(maskStr)
 		tryCatch(
 			bfast_batch(h=nonna_result$h, season=nonna_result$season, startRow=nonna_result$startRow, 
 				startCol=nonna_result$startCol, dates=nonna_result$dates, startIndex=startIndex, endIndex=endIndex, 
