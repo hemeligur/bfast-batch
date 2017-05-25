@@ -101,7 +101,7 @@
 	numproc = trunc((cores/bfast_cores)*2)
 	pts_per_proc = trunc(nonna_result$nonna_sz/numproc)
 
-	cl = makeCluster(numproc)
+	cl = makeCluster(numproc, outfile="")
 	clusterExport(cl, c("bfast_batch", "nonna_result", "maskStr", "dataRasterStr", "outputType", 
 		"pts_per_proc", "numproc", "bfast_cores"))
 
