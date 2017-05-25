@@ -257,7 +257,7 @@ readNumericParam = function(inputMsg, startBound, endBound, outOfBoundsMsg, trie
     while(!param_valid){
         param <- readInput(inputMsg)
 
-        param = as.numeric(unlist(param))
+        param = suppressWarnings(as.numeric(unlist(param)))
         if(is.na(param) || param < startBound || param > endBound ){
             message(outOfBoundsMsg)
             param_valid = FALSE
@@ -376,8 +376,6 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 		clusterEvalQ(cl, library(raster))
 	###########_Extracting cell values and Zone Mask calculation_###########
 		cellsNzone <- parLapplyLB(cl, 1:length(shape_mask), function(pol){
-			print(class(rastr))
-			print(class(shape_mask))
 			pol_cells = cellFromPointOrPolygon(rastr, shape_mask[pol,], type)
 			if(type == 2 || type == 3){
 				tryCatch(zone_mask[pol_cells[[1]]] <- pol, error=function(e){return(NA)})
