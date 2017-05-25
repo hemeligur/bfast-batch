@@ -98,7 +98,7 @@
 
 	cl = makeCluster(numproc, outfile="")
 	clusterExport(cl, c("bfast_batch", "nonna_result", "maskStr", "dataRasterStr", "outputType", 
-		"pts_per_proc", "numproc", "bfast_cores"))
+		"pts_per_proc", "numproc", "bfast_cores", "beSureToLoad"))
 
 	invisible(clusterEvalQ(cl, {
 		invisible(beSureToLoad(c("rgdal", "raster", "bfast", "doParallel")))

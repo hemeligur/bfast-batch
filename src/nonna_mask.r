@@ -12,7 +12,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 	dataRasterStr = "../data/pa_br_mod13q1_ndvi_250_2000_2016.tif", shape_proc_method=0, printHelp=FALSE){
 
 	#############################_Arguments_prep_####################################
-	print("_Arguments_prep_")
+		print("Arguments preparation")
 		if(printHelp == TRUE){
 			printHelp(cmdName="nonna_mask", args=c("timeChange", "timeUnits", "maskStr", "dataRasterStr", "shape_proc_method", "-h;--help"),
 				defaultArgs=c("1","365", "maskStr.tif", "dataRasterStr.tif", "0"),
@@ -34,7 +34,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 			dataRaster = raster(dataRasterStr);
 		}
 	##############################_Preprocessing_input_##############################
-	print("Preprocessing input ")
+		print("Preprocessing input ")
 		# Inicializa a variável com o valor padrão original
 		dataRasterTmpStr = dataRasterStr
 		if(!endsWith(maskStr, ".tif")){
