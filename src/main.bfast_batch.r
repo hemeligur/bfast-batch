@@ -36,7 +36,7 @@
 		dir.create("../tmp")
 	}
 ################################_Cleaning_log_files_###################################
-	print("Cleaning log files")
+	print("Cleaning log and tmp files")
 	invisible(file.remove(Sys.glob("../logs/*.log")))
 	invisible(file.remove(Sys.glob("../tmp/*.tmp")))
 #########################_Reading_args_and_setting_defaults_###########################
@@ -106,10 +106,10 @@
 		"pts_per_proc", "numproc", "bfast_cores"))
 
 	invisible(clusterEvalQ(cl, {
-		library(rgdal)
-		library(raster)
-		library(bfast)
-		library(doParallel)
+		suppressPackageStartupMessages(library(rgdal))
+		suppressPackageStartupMessages(library(raster))
+		suppressPackageStartupMessages(library(bfast))
+		suppressPackageStartupMessages(library(doParallel))
 
 		registerDoParallel(cores = bfast_cores)
 	}))
