@@ -1,5 +1,7 @@
+source("../lib/utils.lib.r")
+
 zone_parallel = function(rastr, zone_mask, zone, fun, startRowCol=NA, cores=detectCores()-1, clfun=NA, export=TRUE, stop=TRUE){
-	library(raster)
+	invisible(beSureToLoad("raster"))
 	# library(parallel)
 
 	fun = match.fun(fun)
@@ -48,9 +50,7 @@ zone_parallel = function(rastr, zone_mask, zone, fun, startRowCol=NA, cores=dete
 }
 
 zonal_parallel = function(rastr, zone_mask, fun, cores=detectCores()-1){
-	library(raster)
-	library(parallel)
-
+	invisible(beSureToLoad(c("raster", "parallel")))
 	# beginCoord = xyFromCell(zone_mask, 1)
 	# rastrStartCell = cellFromXY(rastr, beginCoord)
 	# startRowCol = rowColFromCell(rastr, rastrStartCell)

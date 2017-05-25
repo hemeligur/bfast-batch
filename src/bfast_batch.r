@@ -1,8 +1,8 @@
 #!/usr/bin/Rscript
 
-library(compiler)
-invisible(setCompilerOptions(optimize=3, suppressAll=TRUE, suppressUndefined=TRUE))
-invisible(enableJIT(3))
+# library(compiler)
+# invisible(setCompilerOptions(optimize=3, suppressAll=TRUE, suppressUndefined=TRUE))
+# invisible(enableJIT(3))
 
 # suppressPackageStartupMessages(library(rgdal))
 # suppressPackageStartupMessages(library(raster))

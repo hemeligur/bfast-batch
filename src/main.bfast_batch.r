@@ -10,23 +10,18 @@
 # Unique arguments that need treatment:
 # maskStr, dataRasterStr, timeChange, timeUnits, outputType
 
-################################_Loading_libraries_####################################
-	print("Loading libraries")
-	suppressPackageStartupMessages(library(compiler))
-	invisible(setCompilerOptions(optimize=3, suppressAll=TRUE, suppressUndefined=TRUE))
-	invisible(enableJIT(3))
-
-	suppressPackageStartupMessages(library(rgdal))
-	suppressPackageStartupMessages(library(raster))
-	# suppressPackageStartupMessages(library(bfast))
-	# suppressPackageStartupMessages(library(doParallel))
-	suppressPackageStartupMessages(library(parallel))
 ################################_Sourcing_code_########################################
 	print("Sourcing code")
 	source("../lib/utils.lib.r")
 	source("nonna_mask.r")
 	source("zonal_parallel.r")
 	source("bfast_batch.r")
+################################_Loading_libraries_####################################
+	print("Loading (and installing) libraries")
+	beSureToLoad(c("compiler", "rgdal", "raster", "bfast", "doParallel", "parallel", "igraph"))
+
+	invisible(setCompilerOptions(optimize=3, suppressAll=TRUE, suppressUndefined=TRUE))
+	invisible(enableJIT(3))
 ###########################_Creating_log_and_tmp_folders_##############################
 	print("Creating log and tmp folders")
 	if(!dir.exists("../logs")){
@@ -106,10 +101,7 @@
 		"pts_per_proc", "numproc", "bfast_cores"))
 
 	invisible(clusterEvalQ(cl, {
-		suppressPackageStartupMessages(library(rgdal))
-		suppressPackageStartupMessages(library(raster))
-		suppressPackageStartupMessages(library(bfast))
-		suppressPackageStartupMessages(library(doParallel))
+		invisible(beSureToLoad(c("rgdal", "raster", "bfast", "doParallel")))
 
 		registerDoParallel(cores = bfast_cores)
 	}))

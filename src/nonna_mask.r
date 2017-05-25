@@ -3,7 +3,7 @@
 # library(compiler)
 # invisible(setCompilerOptions(optimize=3, suppressAll=TRUE, suppressUndefined=TRUE))
 # invisible(enableJIT(3))
-library(parallel)
+# library(parallel)
 # gets the arguments
 # Must be in the following order: timeChange, timeUnits, maskStr, dataRasterStr
 

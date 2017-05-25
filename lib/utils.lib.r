@@ -140,7 +140,7 @@ chooseFile = function(filter="", caption="Choose a file", multi = FALSE, obrigat
 }
 
 file.choose.gui = function(filter="", caption="Choose a file", multi = FALSE){
-	library(tcltk)
+	invisible(beSureToLoad("tcltk"))
 
 	filterLabels = gsub("[.]*", "", filter)
 	filterLabels = toupper(filterLabels)
@@ -309,8 +309,8 @@ line = function(start, end, length){
 cellFromPointOrPolygon = function(r, p, type){
 	switch(type,
 		'1' = {
-			library(rgeos)
-			library(raster)
+			invisible(beSureToLoad(c("rgeos", "raster")))
+
 			centr = gCentroid(p, byid = TRUE)
 			centr_cell = cellFromXY(r, centr)
 			pol_cells = cellFromPolygon(r, p, weights=F)[[1]]
@@ -358,7 +358,7 @@ cellFromPointOrPolygon = function(r, p, type){
 }
 
 cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detectCores()-1){
-	library(parallel)
+	invisible(beSureToLoad("parallel"))
 	#####################_Creating cluster_#################################
 		cores = min(cores, length(shape_mask))
 		cl = makeCluster(cores, outfile="")
@@ -373,7 +373,7 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 	###########_Preparing cluster for cell extraction_######################
 		clusterExport(cl, c("cellFromPointOrPolygon"))
 		clusterExport(cl, c("type", "rastr", "shape_mask"), envir = environment())
-		clusterEvalQ(cl, library(raster))
+		clusterEvalQ(cl, invisible(beSureToLoad("raster")))
 	###########_Extracting cell values and Zone Mask calculation_###########
 		cellsNzone <- parLapplyLB(cl, 1:length(shape_mask), function(pol){
 			pol_cells = cellFromPointOrPolygon(rastr, shape_mask[pol,], type)
@@ -394,4 +394,19 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 
 		stopCluster(cl)
 		return(cellsNzone)
+}
+
+# Check if a package is installed before loading, and installs it if not.
+beSureToLoad <- function(pkg, quietly=TRUE){
+	pkg.not.installed <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+	
+	if (length(pkg.not.installed)){
+		install.packages(pkg.not.installed, dependencies = TRUE)
+	}
+
+	if(quietly == TRUE){
+		suppressPackageStartupMessages(sapply(pkg, require, quietly=quietly, character.only = TRUE))
+	}else{
+		sapply(pkg, require, quietly=quietly, character.only = TRUE)
+	}
 }
