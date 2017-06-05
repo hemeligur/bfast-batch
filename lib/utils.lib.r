@@ -311,59 +311,31 @@ line = function(start, end, length){
 cellFromPointOrPolygon = function(r, p, type){
 	switch(type,
 		'1' = {
-			print(paste(p$ID, "type 1"))
 			invisible(beSureToLoad(c("rgeos", "raster")))
 
 			centr = gCentroid(p, byid = TRUE)
 			centr_cell = cellFromXY(r, centr)
-			##############################################################
-			#
-				spbb <- bbox(p)
-				rsbb <- bbox(r)
-				npol <- length(p@polygons)
-				res[[npol+1]] = NA
-
-				if (spbb[1,1] >= rsbb[1,2] | spbb[1,2] <= rsbb[1,1] | spbb[2,1] >= rsbb[2,2] | spbb[2,2] <= rsbb[2,1]) {
-					print(res[1:npol])
-					print("Ta fora!!!!!!! Cuma???1!?/!11!??")
-				}
-			#
-			##############################################################
 			pol_cells = cellFromPolygon(r, p, weights=F)[[1]]
-			print(paste(p$ID, "centr_cell"))
+			if(is.null(pol_cells)){
+
+			}
 			if(!(centr_cell %in% pol_cells)){
-				print(paste(p$ID, "!(centr_cell %in% pol_cells)"))
 				r.crop = crop(r, p)
-				print(paste(p$ID, "crop"))
-				print(paste(p$ID, length(pol_cells)))
 				pol_cells.crop = cellFromXY(r.crop, xyFromCell(r, pol_cells))
-				print(paste(p$ID, "pol_cells.crop"))
 				centr_cell.crop = cellFromXY(r.crop, xyFromCell(r, centr_cell))
-				print(paste(p$ID, "centr_cell.crop"))
 				
 				r.crop[] = 0
 				r.crop[pol_cells.crop] = 1
 				r.crop[centr_cell.crop] = 2
 				
 				d = gridDistance(r.crop, origin=2, omit=0)
-				print(paste(p$ID, "gridDistance"))
 				d[centr_cell.crop] = maxValue(d)+1000
 				cell = sample(list(Which(d == minValue(d), cells=TRUE)), 1)[[1]]
-				print(paste(p$ID, "min distance"))
 				
-				print(paste(p$ID, "cell:", cell))
-				print(paste(p$ID, "r.crop", r.crop))
 				cells = cellFromXY(r, xyFromCell(r.crop, cell))
-				print(paste(p$ID, "cells"))
 				centroid = centr_cell
-				print(paste(p$ID, "centroid"))
 			}else{
-				print(paste(p$ID, "(centr_cell %in% pol_cells)"))
-				cells = centr_cell
-				print(paste(p$ID, "cells"))
-				print(paste(p$ID, "cell:", cell))
-				centroid = centr_cell
-				print(paste(p$ID, "centroid"))
+				centroid = cells = centr_cell
 			}
 		},
 		'2' = , '3' = {
@@ -380,8 +352,6 @@ cellFromPointOrPolygon = function(r, p, type){
 			centroid = NA
 	  	warning("Invalid type. Must be between 1 and 4.")
 	  })
-
-	print(paste(p$ID, "almost done"))
 
 	pol_cells = NULL
 	pol_cells['cells'] = cells
@@ -412,11 +382,9 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 		cellsNzone <- parLapplyLB(cl, 1:length(shape_mask), function(pol){
 			print(pol)
 			pol_cells = cellFromPointOrPolygon(rastr, shape_mask[pol,], type)
-			print(paste(pol, "foi, depois do pol_cells."))
-			if(type == 2 || type == 3){
+			if((type == 2 || type == 3) && !is.null(pol_cells)){
 				tryCatch(zone_mask[pol_cells[[1]]] <- pol, error=function(e){return(NA)})
 			}
-			print(paste(pol, "foi, depois do zone_mask"))
 
 			res = NULL
 			res['pol_cells'] = list(pol_cells)
@@ -425,8 +393,6 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 			}else{
 				res['zone_mask'] = NA
 			}
-
-			print(paste(pol, "foi, depois do res"))
 
 			return(res)
 		})
