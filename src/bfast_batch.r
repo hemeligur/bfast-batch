@@ -1,38 +1,6 @@
 #!/usr/bin/Rscript
 
-# library(compiler)
-# invisible(setCompilerOptions(optimize=3, suppressAll=TRUE, suppressUndefined=TRUE))
-# invisible(enableJIT(3))
-
-# suppressPackageStartupMessages(library(rgdal))
-# suppressPackageStartupMessages(library(raster))
-# suppressPackageStartupMessages(library(bfast))
-# suppressPackageStartupMessages(library(doParallel))
-
-# registerDoParallel(cores = bfast_cores)
-
 source("../lib/utils.lib.r");
-
-# gets the arguments
-# Must be in the following order: h, season, startRow, startCol, dates, startIndex, endIndex, maskStr, dataRasterStr, outputType
-# args = getArgs(7, must=TRUE);
-
-	# Setting default argument values
-	# h = 0.06;
-	# season = 'harmonic';
-	# startRow = 1;
-	# startCol = 1;
-	# dates = "";
-	# startIndex = 1;
-	# endIndex = 1;
-	# maskStr = "../data/Pastagem/br_resampled_mask_past_v07_modis_5m.tif"
-	# dataRasterStr = "../data/pa_br_mod13q1_ndvi_250_2000_2016.tif"
-	# outputType = "csv"
-
-	# Setting optional arguments default values and constants
-	# datesFile = "../output/bfast_mod13q1_last_break_dates_250_2000_2016.tif"
-	# slopeFile = "../output/bfast_mod13q1_last_slopes_250_2000_2016.tif"
-	# blockSize = 5000;
 
 bfast_batch = function(h=0.06, season='harmonic', startRow, startCol, dates, startIndex=1, 
 	endIndex, maskStr, dataRasterStr, outputType='csv', 

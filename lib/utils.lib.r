@@ -18,6 +18,8 @@
 #		* readNumericParam											 																 #
 #   * line																																	 #
 #   * cellFromPointOrPolygon																								 #
+#   * cellExtractionNZoneMask_parallel																			 #
+#   * beSureToLoad																								 					 #
 ##############################################################################
 
 utils.lib = TRUE
