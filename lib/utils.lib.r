@@ -379,6 +379,7 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 		clusterEvalQ(cl, invisible(beSureToLoad("raster")))
 	###########_Extracting cell values and Zone Mask calculation_###########
 		cellsNzone <- parLapplyLB(cl, 1:length(shape_mask), function(pol){
+			print(pol)
 			pol_cells = cellFromPointOrPolygon(rastr, shape_mask[pol,], type)
 			if(type == 2 || type == 3){
 				tryCatch(zone_mask[pol_cells[[1]]] <- pol, error=function(e){return(NA)})
