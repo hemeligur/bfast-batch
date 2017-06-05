@@ -363,6 +363,7 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 	invisible(beSureToLoad("parallel"))
 	#####################_Creating cluster_#################################
 		cores = min(cores, length(shape_mask))
+		print(length(shape_mask))
 		cl = makeCluster(cores, outfile="")
 	###########_Creating empty zone mask raster_############################
 		if(type == 2 || type == 3){
@@ -382,6 +383,8 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 			if(type == 2 || type == 3){
 				tryCatch(zone_mask[pol_cells[[1]]] <- pol, error=function(e){return(NA)})
 			}
+			print(pol_cells)
+			print(zone_mask)
 
 			res = NULL
 			res['pol_cells'] = list(pol_cells)
