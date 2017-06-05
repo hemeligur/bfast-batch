@@ -311,7 +311,7 @@ line = function(start, end, length){
 cellFromPointOrPolygon = function(r, p, type){
 	switch(type,
 		'1' = {
-			print("type 1")
+			print(paste(p, "type 1"))
 			invisible(beSureToLoad(c("rgeos", "raster")))
 
 			centr = gCentroid(p, byid = TRUE)
