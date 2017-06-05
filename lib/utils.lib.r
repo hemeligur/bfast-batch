@@ -334,11 +334,15 @@ cellFromPointOrPolygon = function(r, p, type){
 				cell = sample(list(Which(d == minValue(d), cells=TRUE)), 1)[[1]]
 				
 				cells = cellFromXY(r, xyFromCell(r.crop, cell))
+				print("cells")
 				centroid = centr_cell
+				print("centroid")
 			}else{
 				print("(centr_cell %in% pol_cells)")
 				cells = centr_cell
+				print("cells")
 				centroid = cell
+				print("centroid")
 			}
 		},
 		'2' = , '3' = {
