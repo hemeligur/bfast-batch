@@ -311,12 +311,15 @@ line = function(start, end, length){
 cellFromPointOrPolygon = function(r, p, type){
 	switch(type,
 		'1' = {
+			print("type 1")
 			invisible(beSureToLoad(c("rgeos", "raster")))
 
 			centr = gCentroid(p, byid = TRUE)
 			centr_cell = cellFromXY(r, centr)
 			pol_cells = cellFromPolygon(r, p, weights=F)[[1]]
+			print("centr_cell")
 			if(!(centr_cell %in% pol_cells)){
+				print("!(centr_cell %in% pol_cells)")
 				r.crop = crop(r, p)
 				
 				pol_cells.crop = cellFromXY(r.crop, xyFromCell(r, pol_cells))
@@ -333,6 +336,7 @@ cellFromPointOrPolygon = function(r, p, type){
 				cells = cellFromXY(r, xyFromCell(r.crop, cell))
 				centroid = centr_cell
 			}else{
+				print("(centr_cell %in% pol_cells)")
 				cells = centr_cell
 				centroid = cell
 			}
