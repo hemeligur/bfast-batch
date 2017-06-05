@@ -311,16 +311,15 @@ line = function(start, end, length){
 cellFromPointOrPolygon = function(r, p, type){
 	switch(type,
 		'1' = {
-			print(p$ID)
-			print(paste("", "type 1"))
+			print(paste(p$ID, "type 1"))
 			invisible(beSureToLoad(c("rgeos", "raster")))
 
 			centr = gCentroid(p, byid = TRUE)
 			centr_cell = cellFromXY(r, centr)
 			pol_cells = cellFromPolygon(r, p, weights=F)[[1]]
-			print("centr_cell")
+			print(paste(p$ID, "centr_cell"))
 			if(!(centr_cell %in% pol_cells)){
-				print("!(centr_cell %in% pol_cells)")
+				print(paste(p$ID, "!(centr_cell %in% pol_cells)"))
 				r.crop = crop(r, p)
 				
 				pol_cells.crop = cellFromXY(r.crop, xyFromCell(r, pol_cells))
@@ -335,15 +334,15 @@ cellFromPointOrPolygon = function(r, p, type){
 				cell = sample(list(Which(d == minValue(d), cells=TRUE)), 1)[[1]]
 				
 				cells = cellFromXY(r, xyFromCell(r.crop, cell))
-				print("cells")
+				print(paste(p$ID, "cells"))
 				centroid = centr_cell
-				print("centroid")
+				print(paste(p$ID, "centroid"))
 			}else{
-				print("(centr_cell %in% pol_cells)")
+				print(paste(p$ID, "(centr_cell %in% pol_cells)"))
 				cells = centr_cell
-				print("cells")
+				print(paste(p$ID, "cells"))
 				centroid = cell
-				print("centroid")
+				print(paste(p$ID, "centroid"))
 			}
 		},
 		'2' = , '3' = {
@@ -361,7 +360,7 @@ cellFromPointOrPolygon = function(r, p, type){
 	  	warning("Invalid type. Must be between 1 and 4.")
 	  })
 
-	print("almost done")
+	print(paste(p$ID, "almost done"))
 
 	pol_cells = NULL
 	pol_cells['cells'] = cells
