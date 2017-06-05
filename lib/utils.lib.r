@@ -362,7 +362,7 @@ cellFromPointOrPolygon = function(r, p, type){
 cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detectCores()-1){
 	invisible(beSureToLoad("parallel"))
 	#####################_Creating cluster_#################################
-		cores = min(cores, length(shape_mask), 5)
+		cores = min(cores, length(shape_mask), 3)
 		print(length(shape_mask))
 		cl = makeCluster(cores, outfile="")
 	###########_Creating empty zone mask raster_############################
