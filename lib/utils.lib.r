@@ -316,7 +316,19 @@ cellFromPointOrPolygon = function(r, p, type){
 
 			centr = gCentroid(p, byid = TRUE)
 			centr_cell = cellFromXY(r, centr)
-			print(paste(p$ID, cellFromPolygon(r, p, weights=F)))
+			##############################################################
+			#
+				spbb <- bbox(p)
+				rsbb <- bbox(r)
+				npol <- length(p@polygons)
+				res[[npol+1]] = NA
+
+				if (spbb[1,1] >= rsbb[1,2] | spbb[1,2] <= rsbb[1,1] | spbb[2,1] >= rsbb[2,2] | spbb[2,2] <= rsbb[2,1]) {
+					print(res[1:npol])
+					print("Ta fora!!!!!!! Cuma???1!?/!11!??")
+				}
+			#
+			##############################################################
 			pol_cells = cellFromPolygon(r, p, weights=F)[[1]]
 			print(paste(p$ID, "centr_cell"))
 			if(!(centr_cell %in% pol_cells)){
@@ -350,7 +362,7 @@ cellFromPointOrPolygon = function(r, p, type){
 				cells = centr_cell
 				print(paste(p$ID, "cells"))
 				print(paste(p$ID, "cell:", cell))
-				centroid = cell
+				centroid = centr_cell
 				print(paste(p$ID, "centroid"))
 			}
 		},
