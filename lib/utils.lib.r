@@ -322,6 +322,7 @@ cellFromPointOrPolygon = function(r, p, type){
 				print(paste(p$ID, "!(centr_cell %in% pol_cells)"))
 				r.crop = crop(r, p)
 				print(paste(p$ID, "crop"))
+				print(paste(p$ID, pol_cells))
 				print(paste(p$ID, xyFromCell(r, pol_cells)))
 				pol_cells.crop = cellFromXY(r.crop, xyFromCell(r, pol_cells))
 				print(paste(p$ID, "pol_cells.crop"))
