@@ -332,10 +332,10 @@ cellFromPointOrPolygon = function(r, p, type){
 				r.crop[centr_cell.crop] = 2
 				
 				d = gridDistance(r.crop, origin=2, omit=0)
-				print(paste(p$ID, "gridDistance")
+				print(paste(p$ID, "gridDistance"))
 				d[centr_cell.crop] = maxValue(d)+1000
 				cell = sample(list(Which(d == minValue(d), cells=TRUE)), 1)[[1]]
-				print(paste(p$ID, "min distance")
+				print(paste(p$ID, "min distance"))
 				
 				print(paste(p$ID, "cell:", cell))
 				print(paste(p$ID, "r.crop", r.crop))
