@@ -311,7 +311,7 @@ line = function(start, end, length){
 cellFromPointOrPolygon = function(r, p, type){
 	switch(type,
 		'1' = {
-			print(p)
+			print(p$ID)
 			print(paste("", "type 1"))
 			invisible(beSureToLoad(c("rgeos", "raster")))
 
