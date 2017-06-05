@@ -333,6 +333,8 @@ cellFromPointOrPolygon = function(r, p, type){
 				d[centr_cell.crop] = maxValue(d)+1000
 				cell = sample(list(Which(d == minValue(d), cells=TRUE)), 1)[[1]]
 				
+				print(paste(p$ID, "cell:", cell))
+				print(paste(p$ID, "r.crop", r.crop))
 				cells = cellFromXY(r, xyFromCell(r.crop, cell))
 				print(paste(p$ID, "cells"))
 				centroid = centr_cell
@@ -341,6 +343,7 @@ cellFromPointOrPolygon = function(r, p, type){
 				print(paste(p$ID, "(centr_cell %in% pol_cells)"))
 				cells = centr_cell
 				print(paste(p$ID, "cells"))
+				print(paste(p$ID, "cell:", cell))
 				centroid = cell
 				print(paste(p$ID, "centroid"))
 			}
