@@ -316,6 +316,7 @@ cellFromPointOrPolygon = function(r, p, type){
 
 			centr = gCentroid(p, byid = TRUE)
 			centr_cell = cellFromXY(r, centr)
+			print(paste(p$ID, cellFromPolygon(r, p, weights=F)))
 			pol_cells = cellFromPolygon(r, p, weights=F)[[1]]
 			print(paste(p$ID, "centr_cell"))
 			if(!(centr_cell %in% pol_cells)){
@@ -323,8 +324,6 @@ cellFromPointOrPolygon = function(r, p, type){
 				r.crop = crop(r, p)
 				print(paste(p$ID, "crop"))
 				print(paste(p$ID, length(pol_cells)))
-				print(paste(p$ID, length(r)))
-				print(paste(p$ID, xyFromCell(r, pol_cells)))
 				pol_cells.crop = cellFromXY(r.crop, xyFromCell(r, pol_cells))
 				print(paste(p$ID, "pol_cells.crop"))
 				centr_cell.crop = cellFromXY(r.crop, xyFromCell(r, centr_cell))
