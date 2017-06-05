@@ -381,11 +381,11 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 		cellsNzone <- parLapplyLB(cl, 1:length(shape_mask), function(pol){
 			print(pol)
 			pol_cells = cellFromPointOrPolygon(rastr, shape_mask[pol,], type)
+			print(paste(pol, "foi, depois do pol_cells."))
 			if(type == 2 || type == 3){
 				tryCatch(zone_mask[pol_cells[[1]]] <- pol, error=function(e){return(NA)})
 			}
-			print(pol_cells)
-			print(zone_mask)
+			print(paste(pol, "foi, depois do zone_mask"))
 
 			res = NULL
 			res['pol_cells'] = list(pol_cells)
@@ -394,6 +394,8 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 			}else{
 				res['zone_mask'] = NA
 			}
+
+			print(paste(pol, "foi, depois do res"))
 
 			return(res)
 		})
