@@ -388,6 +388,7 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 			print(pol)
 			pol_cells = cellFromPointOrPolygon(rastr, shape_mask[pol,], type)
 			print(paste(pol, "after pol_cells"))
+			print(paste(pol, paste(head(pol_cells), collapse=",")))
 			if((type == 2 || type == 3) && !is.null(pol_cells)){
 				print(paste(pol, "before zone_mask"))
 				tryCatch(zone_mask[pol_cells[[1]]] <- pol, error=function(e){return(NA)})
