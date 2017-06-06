@@ -385,7 +385,9 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 			if((type == 2 || type == 3) && !is.null(pol_cells)){
 				tryCatch(zone_mask[pol_cells[[1]]] <- pol, error=function(e){return(NA)})
 			}
-
+			if(pol == 2){
+				print("pol_cells")
+			}
 			res = NULL
 			res['pol_cells'] = list(pol_cells)
 			if(type == 2 || type == 3){
