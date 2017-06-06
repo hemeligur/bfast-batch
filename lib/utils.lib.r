@@ -403,6 +403,9 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 				res['zone_mask'] = NA
 			}
 
+			print(paste(pol, res['pol_cells']))
+			print(res)
+
 			return(res)
 		})
 
