@@ -320,7 +320,7 @@ cellFromPointOrPolygon = function(r, p, type){
 
 			if(is.null(pol_cells)){
 				print(paste(p$ID, "pol_cells is NULL"))
-				cells = centroid = NA
+				cells = centroid = 0
 			}
 			else if(!(centr_cell %in% pol_cells)){
 				print(paste(p$ID, "!(centr_cell %in% pol_cells)"))
