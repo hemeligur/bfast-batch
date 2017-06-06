@@ -311,6 +311,7 @@ line = function(start, end, length){
 cellFromPointOrPolygon = function(r, p, type){
 	switch(type,
 		'1' = {
+			print(paste(p$ID, "type 1"))
 			invisible(beSureToLoad(c("rgeos", "raster")))
 
 			centr = gCentroid(p, byid = TRUE)
@@ -385,8 +386,11 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 		cellsNzone <- parLapplyLB(cl, 1:length(shape_mask), function(pol){
 			print(pol)
 			pol_cells = cellFromPointOrPolygon(rastr, shape_mask[pol,], type)
+			print(paste(pol, "pol_cells"))
 			if((type == 2 || type == 3) && !is.null(pol_cells)){
+				print(paste(pol, "before zone_mask"))
 				tryCatch(zone_mask[pol_cells[[1]]] <- pol, error=function(e){return(NA)})
+				print(paste(pol, "after zone_mask"))
 			}
 
 			res = NULL
