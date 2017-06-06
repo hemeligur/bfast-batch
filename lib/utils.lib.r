@@ -315,12 +315,11 @@ cellFromPointOrPolygon = function(r, p, type){
 			invisible(beSureToLoad(c("rgeos", "raster")))
 
 			centr = gCentroid(p, byid = TRUE)
-			print(centr)
-			print(paste(p$ID, centr))
+			print(paste(p$ID, extent(centr)))
 			centr_cell = cellFromXY(r, centr)
-			print(paste(p$ID, centr, centr_cell))
+			print(paste(p$ID, extent(centr), centr_cell))
 			pol_cells = cellFromPolygon(r, p, weights=F)[[1]]
-			print(paste(p$ID, centr, centr_cell, pol_cells))
+			print(paste(p$ID, extent(centr), centr_cell, pol_cells))
 			if(is.null(pol_cells)){
 				cells = centroid = NA
 			}
