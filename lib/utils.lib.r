@@ -320,9 +320,10 @@ cellFromPointOrPolygon = function(r, p, type){
 
 			if(is.null(pol_cells)){
 				print(paste(p$ID, "pol_cells is NULL"))
-				cells = centroid = NULL
+				cells = centroid = NA
 			}
 			else if(!(centr_cell %in% pol_cells)){
+				print(paste(p$ID, "!(centr_cell %in% pol_cells)"))
 				r.crop = crop(r, p)
 				pol_cells.crop = cellFromXY(r.crop, xyFromCell(r, pol_cells))
 				centr_cell.crop = cellFromXY(r.crop, xyFromCell(r, centr_cell))
@@ -338,6 +339,7 @@ cellFromPointOrPolygon = function(r, p, type){
 				cells = cellFromXY(r, xyFromCell(r.crop, cell))
 				centroid = centr_cell
 			}else{
+				print(paste(p$ID, "(centr_cell %in% pol_cells)"))
 				centroid = cells = centr_cell
 			}
 		},
@@ -385,7 +387,7 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 		cellsNzone <- parLapplyLB(cl, 1:length(shape_mask), function(pol){
 			print(pol)
 			pol_cells = cellFromPointOrPolygon(rastr, shape_mask[pol,], type)
-			print(paste(pol, "pol_cells"))
+			print(paste(pol, "after pol_cells"))
 			if((type == 2 || type == 3) && !is.null(pol_cells)){
 				print(paste(pol, "before zone_mask"))
 				tryCatch(zone_mask[pol_cells[[1]]] <- pol, error=function(e){return(NA)})
