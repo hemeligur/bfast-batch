@@ -316,10 +316,11 @@ cellFromPointOrPolygon = function(r, p, type){
 			centr = gCentroid(p, byid = TRUE)
 			centr_cell = cellFromXY(r, centr)
 			pol_cells = cellFromPolygon(r, p, weights=F)[[1]]
+			print(paste(p$ID, centr, centr_cell, pol_cells))
 			if(is.null(pol_cells)){
-
+				cells = centroid = NA
 			}
-			if(!(centr_cell %in% pol_cells)){
+			else if(!(centr_cell %in% pol_cells)){
 				r.crop = crop(r, p)
 				pol_cells.crop = cellFromXY(r.crop, xyFromCell(r, pol_cells))
 				centr_cell.crop = cellFromXY(r.crop, xyFromCell(r, centr_cell))
@@ -385,9 +386,7 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 			if((type == 2 || type == 3) && !is.null(pol_cells)){
 				tryCatch(zone_mask[pol_cells[[1]]] <- pol, error=function(e){return(NA)})
 			}
-			if(pol == 2){
-				print("pol_cells")
-			}
+
 			res = NULL
 			res['pol_cells'] = list(pol_cells)
 			if(type == 2 || type == 3){
