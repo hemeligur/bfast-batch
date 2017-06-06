@@ -319,7 +319,7 @@ cellFromPointOrPolygon = function(r, p, type){
 			centr_cell = cellFromXY(r, centr)
 			print(paste(p$ID, extent(centr)[2:3], centr_cell, collapse = ""))
 			pol_cells = cellFromPolygon(r, p, weights=F)[[1]]
-			print(paste(p$ID, extent(centr)[2:3], centr_cell, pol_cells, collapse = ""))
+			print(paste(p$ID, extent(centr)[2:3], centr_cell, length(pol_cells), collapse = ""))
 			if(is.null(pol_cells)){
 				cells = centroid = NA
 			}
