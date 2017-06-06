@@ -315,6 +315,7 @@ cellFromPointOrPolygon = function(r, p, type){
 			invisible(beSureToLoad(c("rgeos", "raster")))
 
 			centr = gCentroid(p, byid = TRUE)
+			print(centr)
 			print(paste(p$ID, centr))
 			centr_cell = cellFromXY(r, centr)
 			print(paste(p$ID, centr, centr_cell))
