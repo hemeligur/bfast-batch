@@ -319,6 +319,7 @@ cellFromPointOrPolygon = function(r, p, type){
 			pol_cells = cellFromPolygon(r, p, weights=F)[[1]]
 
 			if(is.null(pol_cells)){
+				print(paste(p$ID, "pol_cells is NULL"))
 				cells = centroid = NULL
 			}
 			else if(!(centr_cell %in% pol_cells)){
