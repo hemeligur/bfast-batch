@@ -82,6 +82,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 				cells = cellsNzone$pol_cells[['cells']]
 				centroids = cellsNzone$pol_cells[['centroid']]
 				zone_mask = cellsNzone$zone_mask
+				print("in nonna_mask; after cellExtractionNZoneMask_parallel")
 				print(cellsNzone)
 			###########_Creating mask and data temp files_##########################
 				print("Creating mask and data temp files")
