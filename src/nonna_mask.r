@@ -78,7 +78,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 				shape_mask = spTransform(shape_mask, crs(dataRaster))
 			###########_Extracting cell values and Zone Mask calculation_###########
 				print("Extracting cell values and Zone Mask calculation")
-				cellsNzone <- cellExtractionNZoneMask_parallel(dataRaster, shape_mask, shape_proc_method)[[1]]
+				cellsNzone <- cellExtractionNZoneMask_parallel(dataRaster, shape_mask, shape_proc_method)
 				cells = cellsNzone$pol_cells[['cells']]
 				centroids = cellsNzone$pol_cells[['centroid']]
 				zone_mask = cellsNzone$zone_mask
@@ -159,7 +159,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 					NAflag = -3000, format = 'GTiff', options = c("COMPRESS=LZW", "TILED=YES", "BIGTIFF=YES"),
 					overwrite=TRUE)
 			}else{
-				stop("File format not suported. Use .shp, .csv or.tif")
+				stop("File format not suported. Use .shp, .csv or .tif")
 			}
 		}
 	##############################_nonna_startRow_and_startCol_######################
