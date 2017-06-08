@@ -47,7 +47,6 @@ bfast_batch = function(h=0.06, season='harmonic', startRow, startCol, dates, sta
 		cat("startIndex:", startIndex, "\n", file=logFile, append = TRUE)
 		cat("endIndex:", endIndex, "\n", file=logFile, append = TRUE)
 
-		print(paste("inside bfast", maskStr))
 		pastureMask = raster(maskStr);
 
 		nonna = scan(paste0(maskStr,"_nonna.txt"), sep=',', quiet=TRUE);
@@ -162,7 +161,7 @@ bfast_batch = function(h=0.06, season='harmonic', startRow, startCol, dates, sta
 						cat("breaksCount >= blockSize\n", file=logFile, append = TRUE)
 						cat(breaksCount, "\n", file=logFile, append = TRUE)
 						cat(cellCount, "\n", file=logFile, append = TRUE)
-						result_df = data.frame(Row = rows, Column = cols, Longitude = lons, Latitude = lats, Date = breakDates, 
+						result_df = data.frame(CellNo = cellCount, Row = rows, Column = cols, Longitude = lons, Latitude = lats, Date = breakDates, 
 							Magnitude = mags, Trend_Before = trendsBfor, Trend_After = trendsAftr, Slope_Before = slopeBfor, 
 							Slope_After = slopeAftr, stringsAsFactors = FALSE)
 
