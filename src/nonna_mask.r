@@ -181,7 +181,6 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 		}
 
 		nonna_sz = length(nonna)
-		print(nonna_sz)
 		rm("nonna")
 	##############################_h_and_dates_######################################
 		print("Calculating h and dates")
