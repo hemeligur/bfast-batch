@@ -89,7 +89,7 @@
 	nonna_result = nonna_mask(timeChange=timeChange, timeUnits=timeUnits, maskStr=maskStr, dataRasterStr=dataRasterStr)
 	dataRasterStr = nonna_result$dataRasterTmpStr
 	maskStr = nonna_result$maskStr
-	print(paste("Calculated h value:", nonna_result$h))
+	print(paste("Calculated h value:"))
 ################################_Cluster_preparation_##################################
 	print("Cluster preparation")
 	cores = detectCores()
