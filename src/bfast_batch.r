@@ -161,7 +161,7 @@ bfast_batch = function(h=0.06, season='harmonic', startRow, startCol, dates, sta
 						cat("breaksCount >= blockSize\n", file=logFile, append = TRUE)
 						cat(breaksCount, "\n", file=logFile, append = TRUE)
 						cat(cellCount, "\n", file=logFile, append = TRUE)
-						result_df = data.frame(CellNo = cellCount, Row = rows, Column = cols, Longitude = lons, Latitude = lats, Date = breakDates, 
+						result_df = data.frame(startIndex = startIndex, Row = rows, Column = cols, Longitude = lons, Latitude = lats, Date = breakDates, 
 							Magnitude = mags, Trend_Before = trendsBfor, Trend_After = trendsAftr, Slope_Before = slopeBfor, 
 							Slope_After = slopeAftr, stringsAsFactors = FALSE)
 
@@ -215,7 +215,7 @@ bfast_batch = function(h=0.06, season='harmonic', startRow, startCol, dates, sta
 		}else{
 			print(paste("breaksCount:", breaksCount))
 			print(paste("cellCount:", cellCount))
-			result_df = data.frame(CellNo = cellCount, Row = rows[1:breaksCount], Column = cols[1:breaksCount],
+			result_df = data.frame(startIndex = startIndex, Row = rows[1:breaksCount], Column = cols[1:breaksCount],
 				Longitude = lons[1:breaksCount], Latitude = lats[1:breaksCount], Date = breakDates[1:breaksCount],
 				Magnitude = mags[1:breaksCount], Trend_Before = trendsBfor[1:breaksCount],
 				Trend_After = trendsAftr[1:breaksCount], Slope_Before = slopeBfor[1:breaksCount],

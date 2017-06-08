@@ -114,7 +114,7 @@
 	}))
 
 	if(outputType == "csv" && !file.exists("bfast_results.csv")){
-		empty_df = data.frame(Row = numeric(), Column = numeric(), Longitude = numeric(), Latitude = numeric(), Date = numeric(), 
+		empty_df = data.frame(startIndex = numeric(), Row = numeric(), Column = numeric(), Longitude = numeric(), Latitude = numeric(), Date = numeric(), 
 							Magnitude = numeric(), Trend_Before = numeric(), Trend_After = numeric(), Slope_Before = numeric(), 
 							Slope_After = numeric())
 		write.table(empty_df, file = "bfast_results.csv", row.names = FALSE, quote = FALSE, sep = ';')
