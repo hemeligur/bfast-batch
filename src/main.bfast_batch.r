@@ -89,6 +89,7 @@
 	nonna_result = nonna_mask(timeChange=timeChange, timeUnits=timeUnits, maskStr=maskStr, dataRasterStr=dataRasterStr)
 	dataRasterStr = nonna_result$dataRasterTmpStr
 	maskStr = nonna_result$maskStr
+	print(paste("after nonna:", maskStr))
 ################################_Cluster_preparation_##################################
 	print(paste("Calculated h value:", nonna_result$h))
 	print("Cluster preparation")
@@ -101,6 +102,7 @@
 
 	cl = makeCluster(numproc, outfile="")
 	print("makeCluster")
+	print(paste("before cluster export:", maskStr))
 	clusterExport(cl, c("bfast_batch", "nonna_result", "maskStr", "dataRasterStr", "outputType", 
 		"pts_per_proc", "numproc", "bfast_cores", "beSureToLoad"))
 	print("clusterExport")
@@ -120,8 +122,8 @@
 	}
 ################################_Firing_parallel_nodes_################################
 	print(paste("Firing", numproc, "parallel nodes, each with", pts_per_proc, "points. Totalizing", nonna_result$nonna_sz))
-	print(maskStr)
-	res = parLapply(cl, 1:numproc, function(x){
+	print(paste("before firing parallel processes:", maskStr))
+	res = parLapply(cl, 1:nonna_result$nonna_sz, function(x){
 
 		startIndex = 1 + (x-1)*pts_per_proc
 		if(x == numproc){
@@ -131,7 +133,7 @@
 			endIndex = x*pts_per_proc
 		}
 
-		print(maskStr)
+		print(paste("inside parLapply and befor calling bfast:",maskStr))
 		tryCatch(
 			bfast_batch(h=nonna_result$h, season=nonna_result$season, startRow=nonna_result$startRow, 
 				startCol=nonna_result$startCol, dates=nonna_result$dates, startIndex=startIndex, endIndex=endIndex, 
