@@ -345,7 +345,7 @@ cellFromPointOrPolygon = function(r, p, type){
 		},
 		'2' = , '3' = {
 			cells = cellFromPolygon(r, p, weights=F)[[1]]
-			centroid = cellFromPointOrPolygon(r, p, 1)
+			centroid = cellFromPointOrPolygon(r, p, 1)['centroid']
 		},
 		'4' = {
 			cell = cellFromXY(r, p)
@@ -358,9 +358,7 @@ cellFromPointOrPolygon = function(r, p, type){
 	  	warning("Invalid type. Must be between 1 and 4.")
 	  })
 
-	pol_cells = NULL
-	pol_cells['cells'] = cells
-	pol_cells['centroid'] = centroid
+	pol_cells = c('cells' = cells, 'centroid' = centroid)
 
   return(pol_cells)
 }
@@ -429,3 +427,4 @@ beSureToLoad <- function(pkg, quietly=TRUE){
 		sapply(pkg, require, quietly=quietly, character.only = TRUE)
 	}
 }
+	pol_cells['cells'] = cells
