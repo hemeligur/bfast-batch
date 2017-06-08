@@ -163,6 +163,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 		}
 	##############################_nonna_startRow_and_startCol_######################
 		print("Calculating nonna, startRow and startCol")
+		print(paste("maskStr:", maskStr))
 		mask = raster(maskStr);
 
 		beginCoord = xyFromCell(mask, 1);
@@ -192,6 +193,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 	
 		dates = generateModisDates(bands)
 	#############################_output_############################################
+		print(paste("nonna_output, maskStr:", maskStr))
 		nonna_output = list(nonna_sz=nonna_sz, h=h, startRow=startRow, startCol=startCol, dates=dates,
 			dataRasterTmpStr=dataRasterTmpStr, maskStr=maskStr)
 		return(nonna_output)
