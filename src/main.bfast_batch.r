@@ -87,6 +87,7 @@
 #######################_nonna, startRow, startCol, h and dates_########################
 	print("Calculating nonna, startRow, startCol, h and dates")
 	nonna_result = nonna_mask(timeChange=timeChange, timeUnits=timeUnits, maskStr=maskStr, dataRasterStr=dataRasterStr)
+	
 	dataRasterStr = nonna_result$dataRasterTmpStr
 	maskStr = nonna_result$maskStr
 	print(paste("after nonna, maskStr:", maskStr, ".And nonna_result$maskStr", nonna_result$maskStr))
