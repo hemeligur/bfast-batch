@@ -87,10 +87,9 @@
 #######################_nonna, startRow, startCol, h and dates_########################
 	print("Calculating nonna, startRow, startCol, h and dates")
 	nonna_result = nonna_mask(timeChange=timeChange, timeUnits=timeUnits, maskStr=maskStr, dataRasterStr=dataRasterStr)
-	print(paste("Calculated h value:", nonna_result$h))
-	print(maskStr)
 	dataRasterStr = nonna_result$dataRasterTmpStr
 	maskStr = nonna_result$maskStr
+	print(paste("Calculated h value:", nonna_result$h))
 ################################_Cluster_preparation_##################################
 	print("Cluster preparation")
 	cores = detectCores()
