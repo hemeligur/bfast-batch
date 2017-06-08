@@ -127,15 +127,17 @@
 ################################_Firing_parallel_nodes_################################
 	print(paste("Firing", numproc, "parallel nodes, each with", pts_per_proc, "points. Totalizing", nonna_result$nonna_sz))
 	print(paste("before firing parallel processes:", maskStr))
-	res = parLapply(cl, 1:numproc, function(x){
+	res = parLapply(cl, 1:nonna_result$nonna_sz, function(x){
 
-		startIndex = 1 + (x-1)*pts_per_proc
-		if(x == numproc){
-			rest = nonna_result$nonna_sz %% numproc
-			endIndex = x*pts_per_proc + rest
-		}else{
-			endIndex = x*pts_per_proc
-		}
+		# startIndex = 1 + (x-1)*pts_per_proc
+		# if(x == numproc){
+		# 	rest = nonna_result$nonna_sz %% numproc
+		# 	endIndex = x*pts_per_proc + rest
+		# }else{
+		# 	endIndex = x*pts_per_proc
+		# }
+		startIndex = x
+		endIndex = x
 
 		print(paste("inside parLapply and befor calling bfast:",maskStr))
 		tryCatch(
