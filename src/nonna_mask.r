@@ -79,11 +79,11 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 			###########_Extracting cell values and Zone Mask calculation_###########
 				print("Extracting cell values and Zone Mask calculation")
 				cellsNzone <- cellExtractionNZoneMask_parallel(dataRaster, shape_mask, shape_proc_method)
-				cells = cellsNzone$pol_cells[['cells']]
-				centroids = cellsNzone$pol_cells[['centroid']]
+				cells = cellsNzone$cells
+				centroids = cellsNzone$centroid
 				zone_mask = cellsNzone$zone_mask
 				print("in nonna_mask; after cellExtractionNZoneMask_parallel")
-				print(cells)
+				print(cellsNzone)
 			###########_Creating mask and data temp files_##########################
 				print("Creating mask and data temp files")
 				# Cria uma máscara e brick temporários para o processamento

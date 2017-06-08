@@ -376,6 +376,7 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 			zone_mask = crop(extent(shape_mask)+5)
 			setValues(zone_mask, 0)
 			clusterExport(cl, c("zone_mask"), envir = environment())
+			rm(zone_mask)
 		}
 	###########_Preparing cluster for cell extraction_######################
 		clusterExport(cl, c("cellFromPointOrPolygon", "beSureToLoad"))
@@ -407,7 +408,18 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 			return(res)
 		})
 
-		print(class(cellsNzone))
+		cells = NULL
+		centroids = NULL
+		zone_mask.v = NULL
+		for(e in cellsNzone){
+			cells = c(cells, e$pol_cells[['cells']])
+			centroids = c(centroids, e$pol_cells[['centroid']])
+			zone_mask.v = c(zone_mask.v, e$zone_mask)
+		}
+
+		zone_mask = sum(zone_mask.v)
+
+		cellsNzone = list('cells' = cells, 'centroids' = centroids, 'zone_mask' = zone_mask)
 
 		stopCluster(cl)
 		return(cellsNzone)
@@ -427,4 +439,3 @@ beSureToLoad <- function(pkg, quietly=TRUE){
 		sapply(pkg, require, quietly=quietly, character.only = TRUE)
 	}
 }
-	pol_cells['cells'] = cells
