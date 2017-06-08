@@ -409,7 +409,7 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 			return(res)
 		})
 
-		print(cellsNzone)
+		print(class(cellsNzone))
 
 		stopCluster(cl)
 		return(cellsNzone)
