@@ -92,7 +92,6 @@
 
 	dataRasterStr = nonna_result$dataRasterTmpStr
 	maskStr = nonna_result$maskStr
-	print(paste("after nonna, maskStr:", maskStr, ".And nonna_result$maskStr", nonna_result$maskStr))
 	print(paste("Calculated h value:", nonna_result$h))
 ################################_Cluster_preparation_##################################
 
@@ -105,18 +104,14 @@
 	print(paste("cores:", cores, "bfast_cores:", bfast_cores, "numproc:", numproc, "pts_per_proc:", pts_per_proc))
 
 	cl = makeCluster(numproc, outfile="")
-	print("makeCluster")
-	print(paste("before cluster export:", maskStr))
 	clusterExport(cl, c("bfast_batch", "nonna_result", "maskStr", "dataRasterStr", "outputType", 
 		"pts_per_proc", "numproc", "bfast_cores", "beSureToLoad"))
-	print("clusterExport")
 
 	invisible(clusterEvalQ(cl, {
 		invisible(beSureToLoad(c("rgdal", "raster", "bfast", "doParallel")))
 
 		registerDoParallel(cores = bfast_cores)
 	}))
-	print("clusterEvalQ")
 
 	if(outputType == "csv" && !file.exists("bfast_results.csv")){
 		empty_df = data.frame(Row = numeric(), Column = numeric(), Longitude = numeric(), Latitude = numeric(), Date = numeric(), 
@@ -126,7 +121,6 @@
 	}
 ################################_Firing_parallel_nodes_################################
 	print(paste("Firing", numproc, "parallel nodes, each with", pts_per_proc, "points. Totalizing", nonna_result$nonna_sz))
-	print(paste("before firing parallel processes:", maskStr))
 	res = parLapply(cl, 1:nonna_result$nonna_sz, function(x){
 
 		# startIndex = 1 + (x-1)*pts_per_proc
@@ -139,7 +133,6 @@
 		startIndex = x
 		endIndex = x
 
-		print(paste("inside parLapply and befor calling bfast:",maskStr))
 		tryCatch(
 			bfast_batch(h=nonna_result$h, season=nonna_result$season, startRow=nonna_result$startRow, 
 				startCol=nonna_result$startCol, dates=nonna_result$dates, startIndex=startIndex, endIndex=endIndex, 
@@ -150,4 +143,4 @@
 	})
 
 	stopCluster(cl)
-	print("done")
+	print("F I N I T A !")
