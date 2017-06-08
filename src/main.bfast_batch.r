@@ -90,9 +90,9 @@
 ################################_Cluster_preparation_##################################
 	dataRasterStr = nonna_result$dataRasterTmpStr
 	maskStr = nonna_result$maskStr
-	print(paste("after nonna:", maskStr))
+	print(paste("after nonna, maskStr:", maskStr, ".And nonna_result$maskStr", nonna_result$maskStr))
 	print(paste("Calculated h value:", nonna_result$h))
-	
+
 	print("Cluster preparation")
 	cores = detectCores()-1
 	bfast_cores = min(cores, bfast_num_cores)
