@@ -83,7 +83,6 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 				centroids = cellsNzone$centroid
 				zone_mask = cellsNzone$zone_mask
 				print("in nonna_mask; after cellExtractionNZoneMask_parallel")
-				print(cellsNzone)
 			###########_Creating mask and data temp files_##########################
 				print("Creating mask and data temp files")
 				# Cria uma máscara e brick temporários para o processamento
@@ -94,7 +93,6 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 					'1' = , '4' = {
 						croppedCells = cellFromXY(maskRast, xyFromCell(dataRaster, cells))
 						maskRast[croppedCells] = 1
-						print(summary(maskRast))
 					},
 					'2' = , '3' = {
 						print("Cases 2 and 3")

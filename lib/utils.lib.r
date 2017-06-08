@@ -311,7 +311,6 @@ line = function(start, end, length){
 cellFromPointOrPolygon = function(r, p, type){
 	switch(type,
 		'1' = {
-			print(paste(p$ID, "type 1"))
 			invisible(beSureToLoad(c("rgeos", "raster")))
 
 			centr = gCentroid(p, byid = TRUE)
@@ -319,11 +318,9 @@ cellFromPointOrPolygon = function(r, p, type){
 			pol_cells = cellFromPolygon(r, p, weights=F)[[1]]
 
 			if(is.null(pol_cells)){
-				print(paste(p$ID, "pol_cells is NULL"))
 				cells = centroid = NA
 			}
 			else if(!(centr_cell %in% pol_cells)){
-				print(paste(p$ID, "!(centr_cell %in% pol_cells)"))
 				r.crop = crop(r, p)
 				pol_cells.crop = cellFromXY(r.crop, xyFromCell(r, pol_cells))
 				centr_cell.crop = cellFromXY(r.crop, xyFromCell(r, centr_cell))
@@ -339,7 +336,6 @@ cellFromPointOrPolygon = function(r, p, type){
 				cells = cellFromXY(r, xyFromCell(r.crop, cell))
 				centroid = centr_cell
 			}else{
-				print(paste(p$ID, "(centr_cell %in% pol_cells)"))
 				centroid = cells = centr_cell
 			}
 		},
@@ -367,7 +363,6 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 	invisible(beSureToLoad("parallel"))
 	#####################_Creating cluster_#################################
 		cores = min(cores, length(shape_mask), 1)
-		print(length(shape_mask))
 		cl = makeCluster(cores, outfile="")
 	###########_Creating empty zone mask raster_############################
 		if(type == 2 || type == 3){
@@ -384,14 +379,10 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 		clusterEvalQ(cl, invisible(beSureToLoad("raster")))
 	###########_Extracting cell values and Zone Mask calculation_###########
 		cellsNzone <- parLapplyLB(cl, 1:length(shape_mask), function(pol){
-			print(pol)
+			message(paste(pol, "of", length(shape_mask)))
 			pol_cells = cellFromPointOrPolygon(rastr, shape_mask[pol,], type)
-			print(paste(pol, "after pol_cells"))
-			print(paste(pol, paste(head(pol_cells), collapse=",")))
 			if((type == 2 || type == 3) && !is.null(pol_cells)){
-				print(paste(pol, "before zone_mask"))
 				tryCatch(zone_mask[pol_cells[[1]]] <- pol, error=function(e){return(NA)})
-				print(paste(pol, "after zone_mask"))
 			}
 
 			res = NULL
@@ -401,9 +392,6 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 			}else{
 				res['zone_mask'] = NA
 			}
-
-			print(paste(pol, res['pol_cells']))
-			print(res)
 
 			return(res)
 		})
