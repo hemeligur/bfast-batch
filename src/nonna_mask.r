@@ -94,6 +94,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 					'1' = , '4' = {
 						croppedCells = cellFromXY(maskRast, xyFromCell(dataRaster, cells))
 						maskRast[croppedCells] = 1
+						print(summary(maskRast))
 					},
 					'2' = , '3' = {
 						print("Cases 2 and 3")
