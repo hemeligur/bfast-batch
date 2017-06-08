@@ -215,7 +215,7 @@ bfast_batch = function(h=0.06, season='harmonic', startRow, startCol, dates, sta
 		}else{
 			print(breaksCount);
 			print(cellCount);
-			result_df = data.frame(Row = rows[1:breaksCount], Column = cols[1:breaksCount],
+			result_df = data.frame(CellNo = cellCount, Row = rows[1:breaksCount], Column = cols[1:breaksCount],
 				Longitude = lons[1:breaksCount], Latitude = lats[1:breaksCount], Date = breakDates[1:breaksCount],
 				Magnitude = mags[1:breaksCount], Trend_Before = trendsBfor[1:breaksCount],
 				Trend_After = trendsAftr[1:breaksCount], Slope_Before = slopeBfor[1:breaksCount],
