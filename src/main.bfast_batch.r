@@ -89,9 +89,9 @@
 	nonna_result = nonna_mask(timeChange=timeChange, timeUnits=timeUnits, maskStr=maskStr, dataRasterStr=dataRasterStr)
 	dataRasterStr = nonna_result$dataRasterTmpStr
 	maskStr = nonna_result$maskStr
-	print("Cluster preparation")
 ################################_Cluster_preparation_##################################
-	print("Calculated h value:")
+	print(paste("Calculated h value:", nonna_result$h))
+	print("Cluster preparation")
 	cores = detectCores()
 	bfast_cores = min(cores, bfast_num_cores)
 	numproc = min(trunc((cores/bfast_cores)*2), nonna_result$nonna_sz)
