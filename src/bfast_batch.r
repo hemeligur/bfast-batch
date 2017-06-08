@@ -176,21 +176,17 @@ bfast_batch = function(h=0.06, season='harmonic', startRow, startCol, dates, sta
 						cols[i+breaksCount] = col
 						lons[i+breaksCount] = lon
 						lats[i+breaksCount] = lat
-						cat("row, col, lon, lat\n", file=logFile, append = TRUE)
 
 						trendsBfor[i+breaksCount] = tryCatch(fit$Mags[i,1], error=function(e){return(NA)})
 						trendsAftr[i+breaksCount] = tryCatch(fit$Mags[i,2], error=function(e){return(NA)})
 						mags[i+breaksCount] = tryCatch(fit$Mags[i,3], error=function(e){return(NA)})
-						cat("mags\n", file=logFile, append = TRUE)
 
 						breakDates[i+breaksCount] = format(dates[breaks[i]], "%Y%j")[1]
-						cat("dates\n", file=logFile, append = TRUE)
 
 						bforObs = ifelse(i == 1, 1, breaks[i-1])
 						aftrObs = ifelse(i == length(breaks), length(trendCmp), breaks[i+1])
 						trendCmpBfor = trendCmp[bforObs:breaks[i]]
 						trendCmpAftr = trendCmp[breaks[i]:aftrObs]
-						cat("trendCmp\n", file=logFile, append = TRUE)
 
 						slopeBfor[i+breaksCount] =
 						((trendCmpBfor[2*floor(length(trendCmpBfor)/3)] - trendCmpBfor[floor(length(trendCmpBfor)/3)])/
@@ -198,7 +194,6 @@ bfast_batch = function(h=0.06, season='harmonic', startRow, startCol, dates, sta
 						slopeAftr[i+breaksCount] =
 						((trendCmpAftr[2*floor(length(trendCmpAftr)/3)] - trendCmpAftr[floor(length(trendCmpAftr)/3)])/
 						(2*floor(length(trendCmpAftr)/3) - floor(length(trendCmpAftr)/3)))[1]
-						cat("slope\n", file=logFile, append = TRUE)
 					}
 					breaksCount = breaksCount + length(breaks)
 					cat("CSV lines writen. Going to next point.", "\n", file=logFile, append = TRUE)
