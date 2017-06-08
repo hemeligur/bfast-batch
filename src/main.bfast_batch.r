@@ -127,7 +127,7 @@
 ################################_Firing_parallel_nodes_################################
 	print(paste("Firing", numproc, "parallel nodes, each with", pts_per_proc, "points. Totalizing", nonna_result$nonna_sz))
 	print(paste("before firing parallel processes:", maskStr))
-	res = parLapply(cl, 1:nonna_result$nonna_sz, function(x){
+	res = parLapply(cl, 1:numproc, function(x){
 
 		startIndex = 1 + (x-1)*pts_per_proc
 		if(x == numproc){
