@@ -92,20 +92,25 @@
 ################################_Cluster_preparation_##################################
 	print(paste("Calculated h value:", nonna_result$h))
 	print("Cluster preparation")
-	cores = detectCores()
+	cores = detectCores()-1
 	bfast_cores = min(cores, bfast_num_cores)
 	numproc = min(trunc((cores/bfast_cores)*2), nonna_result$nonna_sz)
 	pts_per_proc = trunc(nonna_result$nonna_sz/numproc)
 
+	print(paste("cores:", cores, "bfast_cores:", bfast_cores, "numproc:", numproc, "pts_per_proc:", pts_per_proc))
+
 	cl = makeCluster(numproc, outfile="")
+	print("makeCluster")
 	clusterExport(cl, c("bfast_batch", "nonna_result", "maskStr", "dataRasterStr", "outputType", 
 		"pts_per_proc", "numproc", "bfast_cores", "beSureToLoad"))
+	print("clusterExport")
 
 	invisible(clusterEvalQ(cl, {
 		invisible(beSureToLoad(c("rgdal", "raster", "bfast", "doParallel")))
 
 		registerDoParallel(cores = bfast_cores)
 	}))
+	print("clusterEvalQ")
 
 	if(outputType == "csv" && !file.exists("bfast_results.csv")){
 		empty_df = data.frame(Row = numeric(), Column = numeric(), Longitude = numeric(), Latitude = numeric(), Date = numeric(), 
