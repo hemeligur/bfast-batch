@@ -320,7 +320,7 @@ cellFromPointOrPolygon = function(r, p, type){
 
 			if(is.null(pol_cells)){
 				print(paste(p$ID, "pol_cells is NULL"))
-				cells = centroid = 0
+				cells = centroid = NA
 			}
 			else if(!(centr_cell %in% pol_cells)){
 				print(paste(p$ID, "!(centr_cell %in% pol_cells)"))
@@ -419,7 +419,7 @@ cellExtractionNZoneMask_parallel = function(rastr, shape_mask, type, cores=detec
 
 		zone_mask = sum(zone_mask.v)
 
-		cellsNzone = list('cells' = cells, 'centroids' = centroids, 'zone_mask' = zone_mask)
+		cellsNzone = list('cells' = na.exclude(cells), 'centroids' = na.exclude(centroids), 'zone_mask' = zone_mask)
 
 		stopCluster(cl)
 		return(cellsNzone)
