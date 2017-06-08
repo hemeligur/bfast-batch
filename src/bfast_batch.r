@@ -213,8 +213,8 @@ bfast_batch = function(h=0.06, season='harmonic', startRow, startCol, dates, sta
 			print(dateRasterOutput)
 			print(slopeRasterOutput)
 		}else{
-			print(breaksCount);
-			print(cellCount);
+			print(paste("breaksCount:", breaksCount))
+			print(paste("cellCount:", cellCount))
 			result_df = data.frame(CellNo = cellCount, Row = rows[1:breaksCount], Column = cols[1:breaksCount],
 				Longitude = lons[1:breaksCount], Latitude = lats[1:breaksCount], Date = breakDates[1:breaksCount],
 				Magnitude = mags[1:breaksCount], Trend_Before = trendsBfor[1:breaksCount],
