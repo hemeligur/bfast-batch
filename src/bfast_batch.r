@@ -206,15 +206,10 @@ bfast_batch = function(h=0.06, season='harmonic', startRow, startCol, dates, sta
 		}
 	###########################_Finish_writing_last_data_###########################################
 		if(outputType != "csv"){
-			print(cellCount)
 			dateRasterOutput = update(dateRasterOutput, v=datesBlk[1:(cellCount%%blockSize)], cell=nonna[blockStart:length(nonna)])
 			slopeRasterOutput = update(slopeRasterOutput, v=slopesBlk[1:(cellCount%%blockSize)], cell=nonna[blockStart:length(nonna)])
-
-			print(dateRasterOutput)
-			print(slopeRasterOutput)
+			
 		}else{
-			print(paste("breaksCount:", breaksCount))
-			print(paste("cellCount:", cellCount))
 			result_df = data.frame(startIndex = startIndex, Row = rows[1:breaksCount], Column = cols[1:breaksCount],
 				Longitude = lons[1:breaksCount], Latitude = lats[1:breaksCount], Date = breakDates[1:breaksCount],
 				Magnitude = mags[1:breaksCount], Trend_Before = trendsBfor[1:breaksCount],
