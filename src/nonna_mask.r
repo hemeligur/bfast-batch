@@ -194,8 +194,7 @@ nonna_mask = function(timeChange = 1, timeUnits = 365,
 		dates = generateModisDates(bands)
 	#############################_output_############################################
 		print(paste("nonna_output, maskStr:", maskStr))
-		nonna_output = list(nonna_sz=nonna_sz, h=h, startRow=startRow, startCol=startCol, dates=dates,
-			dataRasterTmpStr=dataRasterTmpStr, maskStr=maskStr)
+		nonna_output = list(nonna_sz=nonna_sz, h=h, startRow=startRow, startCol=startCol, dates=dates, dataRasterTmpStr=dataRasterTmpStr, maskStr=maskStr)
 		return(nonna_output)
 		# cat(nonna_sz, h, startRow, startCol, 
 		# 	paste0("c(", paste0("'", paste(dates, collapse="','"), "'"), ")"), "\n");
